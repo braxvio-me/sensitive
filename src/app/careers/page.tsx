@@ -55,54 +55,70 @@ export default function CareersPage() {
         {/* Header */}
         <div className="mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-4">
-            Talent & Collaboration
+            Careers & Culture
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-tight mb-6">
-            Build what deserves to last.
+            Build what <span className="text-[var(--accent-technical)]">should exist.</span>
           </h1>
           <p className="text-lg sm:text-xl text-[var(--text-secondary)] leading-relaxed max-w-3xl font-normal">
-            We are interested in people who care about the quality of their work, think carefully about the problems they solve, and take responsibility for what they build. Across Braxvio and its ventures, our ambition is to develop useful technology businesses through thoughtful engineering, strong product judgment, and a long-term perspective.
+            Join engineers, researchers, and systems thinkers building technology designed around meaningful human problems. We do not promote corporate clichés. We optimize for autonomy, craftsmanship, deep work, and long-term societal impact.
           </p>
         </div>
 
-        {/* Current Hiring Truth & Philosophy */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
-            <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
-              What We Value
-            </h2>
-            <ul className="space-y-3 text-sm text-[var(--text-secondary)]">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>High Craftsmanship:</strong> Writing readable, maintainable, production-ready software designed to endure.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Direct Ownership:</strong> Taking responsibility for systems end-to-end, from architecture to runtime reliability.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Disciplined Thinking:</strong> Valuing simplicity, sound data models, and real customer utility over transient hype.</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 mb-3">
-                General Expression of Interest
-              </div>
-              <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
-                Confirmed Openings Status
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                Braxvio practices disciplined, intentional hiring. Rather than posting speculative job vacancies, we review expressions of interest on a rolling basis for senior engineering, systems architecture, and venture leadership roles.
-              </p>
-            </div>
-            <p className="text-xs text-[var(--text-tertiary)] pt-4 border-t border-[var(--border-subtle)]">
-              Verified Hiring Safeguard: Zero phantom job requisitions.
+        {/* Culture Disciplines from braxvio.com */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+          <div className="p-7 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
+            <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] mb-2 block">DISCIPLINE 01</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Extreme Craft & Rigor</h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              We care about the invisible details: database query plans, typography leading, cache invalidation, and edge-case fault recovery.
             </p>
           </div>
+
+          <div className="p-7 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
+            <span className="font-mono text-xs font-semibold text-sky-500 mb-2 block">DISCIPLINE 02</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Radical Ownership</h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              You will never encounter layers of bureaucracy. Engineers, designers, and operators own problem domains from initial field research to production telemetry.
+            </p>
+          </div>
+
+          <div className="p-7 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
+            <span className="font-mono text-xs font-semibold text-amber-500 mb-2 block">DISCIPLINE 03</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Curiosity over Dogma</h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              We test our assumptions in real Ghanaian and African marketplaces. When empirical reality contradicts software theory, reality wins.
+            </p>
+          </div>
+
+          <div className="p-7 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
+            <span className="font-mono text-xs font-semibold text-emerald-500 mb-2 block">DISCIPLINE 04</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Human Responsibility</h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              Our software touches healthcare dispensing and student livelihood. We take privacy, security, and algorithmic fairness seriously.
+            </p>
+          </div>
+        </div>
+
+        {/* Authentic Status Banner */}
+        <div className="p-8 sm:p-10 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-700 mb-3">
+              Role Status // Authentic Transparency
+            </div>
+            <h2 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+              No open roles right now.
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-xl">
+              We do not fabricate job postings to artificially inflate company size. However, we are always eager to meet disciplined engineers, systems designers, and domain specialists who care deeply about technological craft.
+            </p>
+          </div>
+          <a
+            href="mailto:jobs@braxvio.com?subject=Braxvio%20Talent%20Inquiry"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-mono font-bold bg-[var(--accent-technical)] text-white hover:opacity-90 transition-opacity shrink-0"
+          >
+            Express Interest: jobs@braxvio.com
+          </a>
         </div>
 
         {/* Expression of Interest Form */}
@@ -117,7 +133,7 @@ export default function CareersPage() {
           </div>
 
           {status === "success" ? (
-            <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+            <div className="p-8 rounded-2xl bg-[#ECFDF5] dark:bg-[#064E3B] border border-emerald-200 dark:border-emerald-700 text-center">
               <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400 mx-auto mb-3" />
               <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
                 Expression of Interest Received

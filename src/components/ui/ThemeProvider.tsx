@@ -13,15 +13,15 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "system",
-  resolvedTheme: "dark",
+  theme: "light",
+  resolvedTheme: "light",
   setTheme: () => {},
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
   const [mounted, setMounted] = useState(false);
 
   // Apply theme to HTML DOM element
@@ -37,14 +37,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Compute resolved theme given preference and system
   const getSystemTheme = useCallback((): ResolvedTheme => {
-    if (typeof window === "undefined") return "dark";
+    if (typeof window === "undefined") return "light";
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }, []);
 
   useEffect(() => {
     setMounted(true);
     const saved = localStorage.getItem("braxvio-theme") as Theme | null;
-    const initialTheme: Theme = saved === "light" || saved === "dark" || saved === "system" ? saved : "system";
+    const initialTheme: Theme = saved === "light" || saved === "dark" || saved === "system" ? saved : "light";
     
     setThemeState(initialTheme);
     const resolved = initialTheme === "system" ? getSystemTheme() : initialTheme;
@@ -86,15 +86,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [applyTheme, getSystemTheme]);
 
   const toggleTheme = useCallback(() => {
-    // Quick toggle cycles: light -> dark -> system
-    if (theme === "light") {
-      setTheme("dark");
-    } else if (theme === "dark") {
-      setTheme("system");
-    } else {
-      setTheme("light");
-    }
-  }, [theme, setTheme]);
+    // Direct, deterministic toggle between light and dark themes
+    const nextTheme: Theme = resolvedTheme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+  }, [resolvedTheme, setTheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>

@@ -4,29 +4,40 @@ import { ArrowRight, ShieldCheck, Compass, Cpu, Scale, Hammer, Globe2 } from "lu
 
 const PRINCIPLES = [
   {
-    title: "Engineering for Durability",
-    description: "We build systems and ventures with reliability, maintainability, and long-term architectural consequences in mind.",
+    title: "Start with the problem.",
+    description: "We do not build technology because an idea sounds clever or trendy. We build because an essential daily system is fractured, slow, or unfair to the people relying on it.",
     icon: Hammer,
+    num: "01",
   },
   {
-    title: "Utility Before Appearance",
-    description: "Design must clarify and elevate genuine product usefulness, rather than concealing an absence of operational substance.",
-    icon: Cpu,
-  },
-  {
-    title: "Trust Is a Requirement",
-    description: "Privacy, security, cryptographic verification, and the responsible handling of user data are non-negotiable fundamentals.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Clear Ownership, Appropriate Autonomy",
-    description: "We define venture responsibilities clearly and afford each founding leadership team the autonomy required to solve its specific market problem.",
+    title: "Design around people.",
+    description: "Real users operate on varying device capabilities, intermittent network connectivity, and under busy, stressful circumstances. Interfaces must be forgiving, transparent, and effortlessly clear.",
     icon: Compass,
+    num: "02",
   },
   {
-    title: "Build for Sustainable Value",
-    description: "We focus on high-impact structural problems, disciplined unit economics, and ventures capable of creating durable multi-decade value.",
+    title: "Build for reality.",
+    description: "Abstract software theories fail when deployed into the messy complexities of physical cities and developing markets. We build for the actual world as it is.",
+    icon: Cpu,
+    num: "03",
+  },
+  {
+    title: "Think in systems.",
+    description: "No product exists in isolation. Health connects to logistics; education connects to commerce and financial identity. Braxvio products share unified infrastructural DNA.",
     icon: Scale,
+    num: "04",
+  },
+  {
+    title: "Earn trust.",
+    description: "Trust is fragile and takes years to earn. We handle user data, healthcare privacy, and financial earnings with institutional discipline and zero deceptive patterns.",
+    icon: ShieldCheck,
+    num: "05",
+  },
+  {
+    title: "Keep evolving.",
+    description: "Technology is never finished. We listen constantly, measure what happens in the field, discard our own preconceptions, and continuously refine our craft.",
+    icon: Globe2,
+    num: "06",
   },
 ];
 
@@ -93,7 +104,7 @@ export function CompanyIdentitySection() {
         {/* Africa & Global Ambition */}
         <div className="mb-28 p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] relative overflow-hidden">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 bg-[#ECFDF5] dark:bg-[#064E3B] mb-4">
               <Globe2 className="w-3.5 h-3.5" />
               Origins & Trajectory
             </div>
@@ -118,10 +129,10 @@ export function CompanyIdentitySection() {
               </h3>
             </div>
             <Link
-              href="/philosophy"
+              href="/about"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent-cobalt)] hover:underline self-start md:self-end"
             >
-              Explore Our Principles
+              About Braxvio
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -139,6 +150,9 @@ export function CompanyIdentitySection() {
                       <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--accent-cobalt)]">
                         <Icon className="w-5 h-5" />
                       </div>
+                      <span className="font-mono text-xs font-semibold text-[var(--text-tertiary)]">
+                        DOCTRINE {principle.num}
+                      </span>
                     </div>
                     <h4 className="text-lg font-bold text-[var(--text-primary)] tracking-tight mb-2">
                       {principle.title}

@@ -316,18 +316,69 @@ function ContactFormInner() {
 export default function ContactPage() {
   return (
     <div className="py-16 md:py-24">
-      <div className="content-container max-w-4xl">
+      <div className="content-container max-w-5xl">
         {/* Header */}
-        <div className="mb-14 text-center max-w-2xl mx-auto">
+        <div className="mb-14 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-4">
-            Institutional Inquiries
+            Communication Channels
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-tight mb-5">
-            Let&apos;s explore what we can build together.
+            Let&apos;s build the future thoughtfully.
           </h1>
           <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-normal">
-            Braxvio welcomes thoughtful conversations with potential partners, businesses, investors, researchers, media representatives, and people interested in our ventures. Select the purpose of your inquiry so we can understand your message and direct it appropriately.
+            Whether exploring ecosystem partnerships, press inquiries, or institutional collaboration, our team is at your disposal.
           </p>
+        </div>
+
+        {/* Channels & HQ Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Card 1: Headquarters */}
+          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-technical)] mb-2">Headquarters</div>
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Braxvio Technologies</h3>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+                Accra, Greater Accra Region, Ghana
+              </p>
+            </div>
+            <div className="pt-3 border-t border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-tertiary)]">
+              Lat: 5.6037° N • Long: 0.1870° W
+            </div>
+          </div>
+
+          {/* Card 2: Direct Inboxes */}
+          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-technical)] mb-2">Direct Inboxes</div>
+              <div className="space-y-1.5 text-xs text-[var(--text-secondary)] font-mono">
+                <div>Partnerships: <a href="mailto:partnerships@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">partnerships@braxvio.com</a></div>
+                <div>Press & Media: <a href="mailto:press@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">press@braxvio.com</a></div>
+                <div>General / Desk: <a href="mailto:admin@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">admin@braxvio.com</a></div>
+              </div>
+            </div>
+            <div className="pt-3 border-t border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-tertiary)]">
+              Careers: <a href="mailto:jobs@braxvio.com" className="hover:underline">jobs@braxvio.com</a>
+            </div>
+          </div>
+
+          {/* Card 3: Instant Communication */}
+          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-500 mb-2">Direct Message</div>
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Chat on WhatsApp</h3>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+                Connect directly with our team for prompt partnership and project discussions.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/qr/V2VVDKVB7J7WL1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300 hover:bg-[#D1FAE5] dark:hover:bg-[#065F46] border border-emerald-200 dark:border-emerald-700 transition-colors w-full"
+            >
+              Open WhatsApp Dialogue →
+            </a>
+          </div>
         </div>
 
         {/* Suspense boundary for useSearchParams */}
@@ -339,7 +390,7 @@ export default function ContactPage() {
         <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/50 text-xs text-[var(--text-tertiary)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Encrypted endpoint routing with rate limiting and automated bot defense.</span>
+            <span>Encrypted endpoint routing compliant with Ghana Data Protection Act 2012 (Act 843).</span>
           </div>
           <span className="font-mono">routing.braxvio.institutional</span>
         </div>

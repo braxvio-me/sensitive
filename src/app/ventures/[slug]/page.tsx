@@ -64,12 +64,12 @@ export default async function VentureProfilePage({ params }: VenturePageProps) {
               {venture.primaryCategory} · {venture.ownershipRelationship}
             </span>
             <span
-              className={`text-xs font-medium px-3 py-1 rounded-full ${
+              className={`text-xs font-medium px-3 py-1 rounded-full border ${
                 venture.status === "Live"
-                  ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
+                  ? "bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700"
                   : venture.status === "Private Beta"
-                  ? "bg-sky-500/15 text-sky-700 dark:text-sky-400"
-                  : "bg-amber-500/15 text-amber-700 dark:text-amber-400"
+                  ? "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-700"
+                  : "bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-700"
               }`}
             >
               Status: {venture.status}

@@ -13,55 +13,82 @@ export const metadata: Metadata = {
 const PARTNERSHIP_MODELS = [
   {
     icon: Building2,
-    title: "Enterprise Pilot & Distribution Access",
-    badge: "Commercial Integration",
+    title: "Strategic Partnership",
+    badge: "Discipline 01",
     description:
-      "We partner with established healthcare providers, commercial property managers, and corporate employers to pilot, refine, and deploy venture software across real-world operational environments.",
+      "For companies, technology providers, and organizations interested in building deep, long-term operational relationships across the Braxvio ecosystem.",
     benefits: [
-      "Direct API integration with hospital ERPs and pharmaceutical supply chains",
-      "Corporate waste diversion and certified ESG compliance audits",
-      "Preferred enterprise onboarding SLAs and dedicated technical support",
+      "Executive alignment on high-impact systemic challenges",
+      "Shared strategic distribution and long-term co-innovation",
+      "Direct technical liaison with Braxvio core engineering"
     ],
-    examples: "Relevant ventures: Pharmora, EcoLift",
-  },
-  {
-    icon: Radio,
-    title: "Telecom & Carrier Peering Infrastructure",
-    badge: "Carrier Peering",
-    description:
-      "We peer directly with mobile network operators, telco aggregators, and SMS gateways to provide low-latency message delivery, carrier billing integration, and resilient failover routing.",
-    benefits: [
-      "Sub-2-second OTP delivery over direct SS7/SMPP carrier interconnects",
-      "Zero-hop routing eliminating aggregator transit markups and packet drops",
-      "Localized USSD session orchestration and mobile money micropayment rails",
-    ],
-    examples: "Relevant venture: Pellmia",
-  },
-  {
-    icon: Network,
-    title: "Venture Incubation & Co-Development",
-    badge: "Co-Building",
-    description:
-      "For corporations with domain expertise and distribution channels facing systemic operational bottlenecks, Braxvio co-founds and architects tailored technology ventures from the ground up.",
-    benefits: [
-      "Shared venture ownership with clear operational boundaries",
-      "Institutional-grade software engineering, security, and cloud architecture",
-      "Accelerated time-to-market with dedicated product teams",
-    ],
-    examples: "Multi-venture model: Consumer Platforms & Enterprise Software",
+    examples: "Target: Ecosystem Leaders & Enterprises",
   },
   {
     icon: Landmark,
-    title: "Institutional Capital & Strategic Dialogue",
-    badge: "Long-Term Syndication",
+    title: "Investment Interest",
+    badge: "Discipline 02",
     description:
-      "We engage with patient institutional co-investors, family offices, and sovereign development funds who share our long-term horizon and discipline for real unit economics.",
+      "For qualified individuals, angel syndicates, venture funds, family offices, and institutions exploring potential financial participation in Braxvio or eligible initiatives.",
     benefits: [
-      "Transparent governance and rigorous cryptographic audit standards",
-      "Focus on cash-flow durable ventures rather than speculative valuation bubbles",
-      "Deep exposure to foundational technology infrastructure across emerging markets",
+      "Patient institutional capital and balance sheet resilience",
+      "Direct exposure to non-speculative, cash-flow durable ventures",
+      "Transparent governance and rigorous auditable telemetry"
     ],
-    examples: "Venture portfolio: Long-term Sovereign Horizons",
+    examples: "Inquiries: admin@braxvio.com",
+  },
+  {
+    icon: Network,
+    title: "Product Partnership",
+    badge: "Discipline 03",
+    description:
+      "Partner directly with an individual Braxvio platform—Kampus, Pharmora, Ecolift, or DevPay Africa—to expand capabilities or serve targeted communities.",
+    benefits: [
+      "University administration and verified hostel operator integrations for Kampus",
+      "Licensed pharmacy networks and cold-chain distributors for Pharmora",
+      "Municipal assemblies and fleet telemetry operators for Ecolift",
+      "Pan-African Mobile Money operators and banking rails for DevPay Africa"
+    ],
+    examples: "Ventures: Kampus, Pharmora, Ecolift, DevPay",
+  },
+  {
+    icon: Radio,
+    title: "Technology Partnership",
+    badge: "Discipline 04",
+    description:
+      "Infrastructure, cloud compute, payment rails, AI models, telecom APIs, identity verification, cold-chain IoT, and specialized technical integrations.",
+    benefits: [
+      "Direct carrier peering and sub-second USSD/OTP integrations",
+      "PostgreSQL, TimescaleDB, and ClickHouse telemetry pipelines",
+      "Encrypted FHIR healthcare data bridges and ISO 20022 banking APIs"
+    ],
+    examples: "Focus: Infrastructure & Hardware IoT",
+  },
+  {
+    icon: Building2,
+    title: "Institutional Partnership",
+    badge: "Discipline 05",
+    description:
+      "For universities, municipal governments, ministries, non-governmental organizations, hospital networks, and financial institutions exploring research or pilot deployments.",
+    benefits: [
+      "Civic waste optimization and circular economy tokenization",
+      "Sovereign academic identity credentials and student welfare safeguards",
+      "Public health supply chain integrity and authenticated medication access"
+    ],
+    examples: "Civic Alliances & Public Utilities",
+  },
+  {
+    icon: Network,
+    title: "Distribution & Market Partnership",
+    badge: "Discipline 06",
+    description:
+      "For regional distributors, retail networks, trade associations, and localized operators that can accelerate market adoption across African and international borders.",
+    benefits: [
+      "Established last-mile retail and pharmaceutical networks",
+      "Pan-African freelance developer communities and tech hubs",
+      "Cross-border liquidity corridors across West, East, and Southern Africa"
+    ],
+    examples: "Pan-African Distribution Channels",
   },
 ];
 
@@ -229,21 +256,98 @@ export default function PartnershipsPage() {
           </div>
         </div>
 
+        {/* 5-Step Transparent Collaboration Pipeline from braxvio.com */}
+        <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-xs mb-20">
+          <div className="max-w-2xl mb-10">
+            <span className="text-xs font-mono uppercase tracking-wider text-[var(--accent-technical)] block mb-2">
+              Transparent Convergence Pipeline
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+              How Partnerships Begin
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)]">
+              Every initiative is evaluated on strategic synergy, technical rigor, and shared long-term societal value.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 01</span>
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Submit</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Tell us about your organization and the collaborative initiative you envision.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 02</span>
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Review</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Leadership assesses operational alignment and technical feasibility.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 03</span>
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Discuss</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Introductory dialogue to align on mutual capabilities and key milestones.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 04</span>
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Evaluate</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Both parties explore technical architecture, scope, and governance.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-xs font-semibold text-emerald-500 block mb-2">STEP 05</span>
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Build</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Sprint planning, API integration, and joint operational deployment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Call to Action Card */}
         <div className="p-10 sm:p-14 rounded-3xl border border-[var(--border-strong)] bg-gradient-to-b from-[var(--surface-elevated)] to-[var(--bg-secondary)]/40 text-center">
           <h2 className="text-2xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
             Initiate a Partnership Dialogue
           </h2>
           <p className="text-base text-[var(--text-secondary)] max-w-xl mx-auto mb-8 font-normal">
-            Whether you represent an enterprise exploring pilot deployment, a carrier discussing network peering, or an institution evaluating venture syndication, we welcome your conversation.
+            Whether exploring enterprise pilot deployment, university integration with Kampus, dispensary onboarding with Pharmora, or discussing investment interest.
           </p>
-          <Link
-            href="/contact?type=Strategic+Partnerships"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all shadow-md"
-          >
-            Start Strategic Conversation
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact?type=Strategic+Partnerships"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all shadow-md"
+            >
+              Start Strategic Conversation
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="https://wa.me/qr/V2VVDKVB7J7WL1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-emerald-700 dark:text-emerald-300 bg-[#ECFDF5] dark:bg-[#064E3B] hover:bg-[#D1FAE5] dark:hover:bg-[#065F46] border border-emerald-200 dark:border-emerald-700 active:scale-[0.98] transition-all"
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>

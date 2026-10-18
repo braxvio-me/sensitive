@@ -2,61 +2,119 @@ import { Venture, VentureCategory } from "@/types/venture";
 
 export const VENTURES_DATA: Venture[] = [
   {
+    id: "kampus",
+    slug: "kampus",
+    name: "Kampus",
+    tagline: "University life. One connected experience.",
+    summary: "A digital ecosystem designed around the everyday realities of university students—unifying academics, verified student housing, peer marketplaces, and campus life.",
+    description: "Kampus unifies the entire student journey into an institutional-grade, student-verified ecosystem. From verified campus accommodation to peer-to-peer textbook and gadget exchange, Kampus treats student life as a complete system, eliminating housing scams and connected across flagship campuses like Legon and KNUST.",
+    primaryCategory: "Consumer Platforms",
+    secondaryTags: ["Education", "Student Housing", "Campus Marketplace", "Public Beta"],
+    status: "Live", // Public Beta in active usage
+    ownershipRelationship: "Braxvio Core Platform",
+    publicUrl: "https://kampus.app",
+    isVerified: true,
+    isPublished: true,
+    publicationApproved: true,
+    lastReviewedAt: "2026-10-15",
+    problemSolved: "Higher education institutions provide academic portals, but daily student life outside the lecture hall is completely fractured across informal WhatsApp groups, insecure marketplace listings, and exploitative unverified housing middlemen.",
+    productPurpose: "To eliminate housing scams, reduce daily living friction, and connect over 45,000 university students across flagship campuses with verified student accommodation, peer commerce, and digital identity passes.",
+    keyCapabilities: [
+      "Verified Student Housing: Direct verification with vetted hostel managers (1,400+ beds, 0% broker fee across Legon & KNUST) and deposit escrow protection",
+      "Campus Peer Marketplace: Safe, student-ID verified buy-and-sell handoff zones for textbooks, calculators, gadgets, and essentials",
+      "Academic & Campus Feeds: Unified schedules, department updates, student union announcements, and campus event discovery",
+      "Digital Student Identity: Cryptographically verifiable student identity badge unlocking campus perks, transport discounts, and peer trust"
+    ],
+    architectureNotes: [
+      "Built with Next.js, React Native, Node.js, PostgreSQL, Redis, and WebSockets",
+      "Optimized for low-bandwidth cellular connections with optimistic offline updates and registrar verification"
+    ]
+  },
+  {
     id: "pharmora",
     slug: "pharmora",
     name: "Pharmora",
-    tagline: "Pharmacy inventory management & medication distribution network",
-    summary: "Integrated pharmaceutical supply chain and dispensary intelligence ecosystem.",
-    description: "Pharmora unifies pharmacy inventory tracking, verified prescription routing, and distributor fulfillment into a resilient clinical network, reducing stockouts and counterfeit pharmaceutical risks across emerging markets.",
+    tagline: "Making healthcare access feel closer.",
+    summary: "A technology-enabled marketplace connecting patients directly with licensed pharmacies, authentic medication inventories, and verified telehealth consultations.",
+    description: "Pharmora connects licensed community pharmacies via a lightweight cloud inventory bridge, giving patients instant visibility into legitimate stock availability, regulated pricing, and temperature-monitored courier delivery.",
     primaryCategory: "Commerce & Marketplaces",
-    secondaryTags: ["Healthcare Logistics", "Supply Chain", "Dispensary Ops"],
-    status: "Live",
-    ownershipRelationship: "Braxvio Incubated Venture",
+    secondaryTags: ["Healthcare", "Pharmaceutical Supply", "Cold-Chain Logistics", "In Development"],
+    status: "In Development",
+    ownershipRelationship: "Braxvio Core Platform",
     publicUrl: "https://pharmora.co",
     isVerified: true,
     isPublished: true,
     publicationApproved: true,
     lastReviewedAt: "2026-10-15",
-    problemSolved: "Fragmented pharmaceutical distribution leads to frequent essential medicine shortages, opaque pricing, and the infiltration of counterfeit drugs in primary care clinics.",
-    productPurpose: "To create an auditable, real-time distribution and point-of-dispense operating system that guarantees authenticity and timely replenishment for community healthcare providers.",
+    problemSolved: "Over 60% of independent pharmacies in sub-Saharan Africa lack real-time digital inventory systems, leading to stockouts, counterfeit drug penetration, and critical delays for chronic patients.",
+    productPurpose: "Protecting patient safety, reducing prescription search latency from hours to seconds, and expanding retail pharmacy distribution across 42+ partner dispensaries with zero counterfeit risk.",
     keyCapabilities: [
-      "Real-time batch-level inventory tracking and temperature-log compliance",
-      "Direct distributor EDI integrations for automated purchase-order routing",
-      "Point-of-dispense barcode verification for authentic medication assurance",
-      "Offline-first dispensary POS supporting intermittent connectivity"
+      "Real-Time Pharmacy Inventory Network: Live query engine across licensed neighborhood pharmacies to locate specialized medicines without physical store visits",
+      "Prescription Digital Verification: Secure prescription upload reviewed and digitally signed by licensed pharmacists before fulfillment",
+      "Cold-Chain Delivery Tracking: Real-time temperature logging (2°C – 8°C) for insulin, vaccines, and specialized biologics in insulated carrier boxes",
+      "Chronic Refill Automation: Predictive reminders and automated recurring refill routing for hypertension, diabetes, and long-term care medications"
     ],
     architectureNotes: [
-      "Distributed event-driven architecture with PostgreSQL multi-tenant isolation",
-      "End-to-end cryptographic verification for supply-chain custody tracking"
+      "Built with TypeScript, GraphQL, FastAPI, PostgreSQL, TimescaleDB, and an Encrypted FHIR Layer",
+      "Field-level encryption for patient health records with strict regulatory audit logging and dispatch telemetry"
+    ]
+  },
+  {
+    id: "ecolift",
+    slug: "ecolift",
+    name: "EcoLift",
+    tagline: "Smarter movement. Cleaner communities.",
+    summary: "A digital logistics platform optimizing municipal and private waste collection, recycling incentives, and dynamic route orchestration for urban sanitation.",
+    description: "EcoLift deploys dynamic route optimization, community on-demand pickup requests, and recyclable material credits to transform waste management into a predictable, modern civic utility.",
+    primaryCategory: "Commerce & Marketplaces",
+    secondaryTags: ["Sustainability", "Civic Logistics", "CleanTech", "In Development"],
+    status: "In Development",
+    ownershipRelationship: "Braxvio Core Platform",
+    publicUrl: "https://ecolift.io",
+    isVerified: true,
+    isPublished: true,
+    publicationApproved: true,
+    lastReviewedAt: "2026-10-12",
+    problemSolved: "Waste management companies run static, inefficient truck routes with high fuel overheads, zero visibility into actual bin volume, and no structured incentive for household waste segregation.",
+    productPurpose: "Targeting a 35% reduction in municipal collection route transit times and accelerating household recyclable segregation with direct citizen incentives and smart bin telemetry.",
+    keyCapabilities: [
+      "Dynamic Route Optimization: Algorithmic haul dispatching that cuts transit idle fuel consumption by 34% by clustering GPS waypoints based on live bin fill-levels",
+      "On-Demand Bulky Waste Scheduling: Citizens schedule pickup for e-waste, furniture, and large scrap with transparent municipal fee tracking",
+      "Circular Economy Tokenization: Weighed post-consumer sorted plastics trigger automated micro-cashback directly to residents' Mobile Money wallets",
+      "Municipal Telemetry Dashboard: Real-time fleet GPS, weekly tonnage tracking (28+ tons), and auditable ESG carbon diversion certificates"
+    ],
+    architectureNotes: [
+      "Built with Go, React, OpenStreetMap / Valhalla, MQTT IoT Gateway, ClickHouse, and PostGIS",
+      "Sensor-driven threshold alerts dispatch haulers before public commercial bins overflow"
     ]
   },
   {
     id: "devpay-africa",
     slug: "devpay-africa",
     name: "DevPay Africa",
-    tagline: "Cross-border compensation and contract compliance for African engineers",
-    summary: "Institutional payout rails and compliance infrastructure for global remote engineering teams.",
-    description: "DevPay Africa provides programmable cross-border payroll, multi-currency escrow, automated tax withholding, and IP assignment contracts tailored for African software talent and global engineering organizations.",
+    tagline: "African talent. Global opportunity.",
+    summary: "A unified financial and contract infrastructure enabling African software engineers, designers, and creators to invoice international clients, hold multi-currency earnings, and get paid with zero friction.",
+    description: "DevPay Africa delivers compliant international invoicing, milestone-locked smart escrow, multi-currency virtual accounts (USD, GBP, EUR, GHS, NGN, KES), and instant payout into local mobile money or domestic bank accounts with 0% predatory FX spreads.",
     primaryCategory: "Enterprise Software",
-    secondaryTags: ["Fintech", "Developer Tools", "Cross-Border Payouts"],
+    secondaryTags: ["Fintech", "Digital Economy", "Developer Rails", "Private Beta"],
     status: "Private Beta",
-    ownershipRelationship: "Braxvio Core Venture",
+    ownershipRelationship: "Braxvio Core Platform",
     publicUrl: "https://devpay.africa",
     isVerified: true,
     isPublished: true,
     publicationApproved: true,
     lastReviewedAt: "2026-10-10",
-    problemSolved: "Global tech companies struggle with local banking rails, high FX conversion fees, and complex cross-border employment compliance when hiring elite African developers.",
-    productPurpose: "To make compensating African technology talent as frictionless, legally compliant, and cost-effective as direct domestic ACH transfers.",
+    problemSolved: "International wire transfers take 5–10 business days, lose up to 12% in hidden FX conversion spreads, and foreign clients frequently hesitate due to compliance and local invoicing fears.",
+    productPurpose: "Empowering African technological professionals to compete globally without arbitrary banking, settlement, or geographic boundaries.",
     keyCapabilities: [
-      "Local clearinghouse payouts directly into local bank accounts & mobile money",
-      "Instant USD/EUR/GBP treasury settlement with transparent wholesale FX rates",
-      "Automated IP assignment and regional contractor compliance verification",
-      "Developer dashboard with milestone tracking, invoicing, and tax documentation"
+      "Global Multi-Currency Receiving Accounts: Direct virtual accounts in the US, UK, and EU allowing international clients to pay via standard ACH/SEPA transfers",
+      "Milestone Escrow & Contract Protection: Automated contract generation with escrow milestones that release funds upon verified pull-request or deliverable approval",
+      "Instant Local Settlement: Immediate liquidity (< 60 sec settlement speed) into Mobile Money (MTN MoMo, Telecel, M-Pesa) and commercial banks across 14 African nations",
+      "Tax & Compliance Automation: Automated W-8BEN form handling, localized invoices, and annual income summaries for sovereign tax filings"
     ],
     architectureNotes: [
-      "Built on ISO 20022 messaging standards with banking partner API fallbacks",
-      "Sub-second ledger validation using double-entry immutable accounting schemas"
+      "Built with Next.js, Rust Engine, PostgreSQL, Stripe / Banking APIs, and Double-entry Ledger Engine",
+      "Sub-second ledger validation using double-entry immutable accounting schemas compliant with ISO 20022"
     ]
   },
   {
@@ -69,7 +127,7 @@ export const VENTURES_DATA: Venture[] = [
     primaryCategory: "Digital Infrastructure",
     secondaryTags: ["Telecom", "Identity Verification", "SMS Gateways"],
     status: "Private Beta",
-    ownershipRelationship: "Braxvio Core Venture",
+    ownershipRelationship: "Braxvio Incubated Infrastructure",
     publicUrl: "https://pellmia.com",
     isVerified: true,
     isPublished: true,
@@ -86,64 +144,6 @@ export const VENTURES_DATA: Venture[] = [
     architectureNotes: [
       "High-concurrency Rust and Go gateway nodes deployed regionally",
       "Direct SS7/SMPP carrier peering with millisecond health-check probes"
-    ]
-  },
-  {
-    id: "ecolift",
-    slug: "ecolift",
-    name: "EcoLift",
-    tagline: "Commercial waste logistics & certified recycling exchange",
-    summary: "Algorithmic waste recovery routing and verified circular economy marketplace.",
-    description: "EcoLift connects commercial properties, industrial facilities, and municipal waste generators directly with verified processing plants, providing automated dispatch, weighbridge verification, and certified environmental metrics.",
-    primaryCategory: "Commerce & Marketplaces",
-    secondaryTags: ["CleanTech", "Logistics", "Sustainability"],
-    status: "In Development",
-    ownershipRelationship: "Braxvio Co-developed Venture",
-    publicUrl: "https://ecolift.io",
-    isVerified: true,
-    isPublished: true,
-    publicationApproved: true,
-    lastReviewedAt: "2026-10-08",
-    problemSolved: "Commercial waste disposal is dominated by informal, unregulated hauling resulting in illegal dumping and less than 12% recyclable material recovery.",
-    productPurpose: "To institutionalize commercial waste recovery through transparent digital dispatch, verified weighbridge tracking, and auditable ESG recycling documentation.",
-    keyCapabilities: [
-      "Automated fleet dispatch and route density optimization for waste haulers",
-      "Digital weighbridge certification via IoT load-cell sensors",
-      "Enterprise ESG carbon and plastic diversion audit certificates",
-      "Spot marketplace for sorted post-industrial polymer and cardboard bales"
-    ],
-    architectureNotes: [
-      "Spatial routing engine powered by PostGIS and OpenStreetMap transit models",
-      "Immutable chain-of-custody tracking from waste origin to processor facility"
-    ]
-  },
-  {
-    id: "kampus",
-    slug: "kampus",
-    name: "Kampus",
-    tagline: "Higher education administrative services & student living marketplace",
-    summary: "Campus life orchestration, verified student housing, and academic services platform.",
-    description: "Kampus modernizes university life across African tertiary institutions by consolidating verified off-campus accommodation, course materials exchange, identity credentials, and campus commerce into a secure mobile-first platform.",
-    primaryCategory: "Consumer Platforms",
-    secondaryTags: ["EdTech", "Campus Commerce", "Student Housing"],
-    status: "In Development",
-    ownershipRelationship: "Braxvio Incubated Venture",
-    publicUrl: "https://kampus.app",
-    isVerified: true,
-    isPublished: true,
-    publicationApproved: true,
-    lastReviewedAt: "2026-10-05",
-    problemSolved: "Students face rampant rental scams, predatory tenancy agreements, and fragmented campus services with zero consumer protection.",
-    productPurpose: "To empower university students with inspected student accommodation, verified landlord escrows, and a trusted peer-to-peer campus economy.",
-    keyCapabilities: [
-      "Physical inspection audit badges and 3D walkthroughs of verified campus rentals",
-      "Escrow-protected tenancy deposit handling with automated landlord dispute mediation",
-      "Peer-to-peer verified textbook and electronics exchange",
-      "Student discounts and subsidized campus transit passes"
-    ],
-    architectureNotes: [
-      "Next.js progressive web app optimized for low-bandwidth cellular connections",
-      "Automated matriculation verification through university registrar integrations"
     ]
   }
 ];

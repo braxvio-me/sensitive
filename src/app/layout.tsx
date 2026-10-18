@@ -90,6 +90,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { CommandPaletteProvider } from "@/components/navigation/GlobalCommandPalette";
+
 export default function RootLayout({
   children,
 }: {
@@ -103,9 +105,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
         <ThemeProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <CommandPaletteProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CommandPaletteProvider>
         </ThemeProvider>
       </body>
     </html>

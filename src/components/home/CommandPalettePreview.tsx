@@ -1,8 +1,8 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { Search, Terminal, ArrowRight, ShieldCheck, Cpu, Code2, Globe } from "lucide-react";
+import { useCommandPalette } from "@/components/navigation/GlobalCommandPalette";
 
 const ACTIONS = [
   {
@@ -10,7 +10,7 @@ const ACTIONS = [
     subtitle: "Commerce & Marketplaces · Live API Telemetry",
     shortcut: "⌘ 1",
     tag: "Live",
-    tagColor: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
+    tagColor: "bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300",
     href: "/ventures/pharmora",
     icon: ShieldCheck,
   },
@@ -19,7 +19,7 @@ const ACTIONS = [
     subtitle: "Enterprise Software · Multi-currency payout rails",
     shortcut: "⌘ 2",
     tag: "Private Beta",
-    tagColor: "bg-sky-500/15 text-sky-600 dark:text-sky-400",
+    tagColor: "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300",
     href: "/ventures/devpay-africa",
     icon: Cpu,
   },
@@ -28,7 +28,7 @@ const ACTIONS = [
     subtitle: "Digital Infrastructure · Sub-second OTP benchmarks",
     shortcut: "⌘ 3",
     tag: "Private Beta",
-    tagColor: "bg-sky-500/15 text-sky-600 dark:text-sky-400",
+    tagColor: "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300",
     href: "/ventures/pellmia",
     icon: Terminal,
   },
@@ -37,7 +37,7 @@ const ACTIONS = [
     subtitle: "Commerce & Marketplaces · Circular logistics engine",
     shortcut: "⌘ 4",
     tag: "In Development",
-    tagColor: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+    tagColor: "bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300",
     href: "/ventures/ecolift",
     icon: Globe,
   },
@@ -45,6 +45,7 @@ const ACTIONS = [
 
 export function CommandPalettePreview() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { open: openGlobalPalette } = useCommandPalette();
 
   const filteredActions = ACTIONS.filter(
     (action) =>
@@ -68,18 +69,16 @@ export function CommandPalettePreview() {
         {/* Interactive Floating Command Palette Mockup (matching reference ui/desktop-full (1).png) */}
         <div className="max-w-2xl mx-auto rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] shadow-xl overflow-hidden">
           {/* Search Header */}
-          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/30">
+          <div
+            onClick={openGlobalPalette}
+            className="flex items-center gap-3 px-4 py-3.5 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/30 cursor-pointer hover:bg-[var(--bg-secondary)]/50 transition-colors"
+          >
             <Search className="w-5 h-5 text-[var(--text-tertiary)] shrink-0" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search ventures, architecture specs, or protocols..."
-              aria-label="Filter command palette"
-              className="w-full bg-transparent text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none"
-            />
-            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-tertiary)] shrink-0">
-              ESC
+            <div className="w-full text-sm text-[var(--text-tertiary)] select-none">
+              Search ventures, architecture specs, or protocols...
+            </div>
+            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)] shrink-0">
+              ⌘K
             </span>
           </div>
 
