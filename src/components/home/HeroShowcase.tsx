@@ -259,7 +259,7 @@ export function HeroShowcase() {
           </h1>
 
           <p className="text-[17px] sm:text-[19px] md:text-[20px] text-[var(--text-secondary)] leading-relaxed max-w-[68ch] mb-10 font-normal">
-            Braxvio creates focused digital products that remove daily friction — from university campus life and pharmacy access to smart city logistics and cross-border developer payments.
+            Braxvio creates focused digital products that remove daily friction from university campus life and pharmacy access to smart city logistics and cross-border developer payments.
           </p>
 
           {/* Call to Actions */}
@@ -337,24 +337,22 @@ export function HeroShowcase() {
                     key={venture.id}
                     type="button"
                     onClick={() => handleSelectVenture(venture.id)}
-                    className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer flex flex-col gap-1 ${
-                      isSelected
+                    className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer flex flex-col gap-1 ${isSelected
                         ? "bg-[var(--surface-elevated)] border border-[var(--border-strong)] shadow-xs"
                         : "hover:bg-[var(--surface-elevated)]/60 text-[var(--text-secondary)]"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className={`text-[14px] font-semibold ${isSelected ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
                         {venture.name}
                       </span>
                       <span
-                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                          venture.status === "Live"
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${venture.status === "Live"
                             ? "bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300"
                             : venture.status === "Private Beta"
-                            ? "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300"
-                            : "bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300"
-                        }`}
+                              ? "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300"
+                              : "bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300"
+                          }`}
                       >
                         {venture.status}
                       </span>
@@ -380,11 +378,10 @@ export function HeroShowcase() {
                           key={v.id}
                           type="button"
                           onClick={() => handleSelectVenture(v.id)}
-                          className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
-                            isSelected
+                          className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${isSelected
                               ? "bg-[var(--accent-cobalt)] text-white font-semibold shadow-2xs"
                               : "bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                          }`}
+                            }`}
                         >
                           {v.name}
                         </button>

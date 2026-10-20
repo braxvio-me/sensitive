@@ -22,7 +22,7 @@ const LEADERSHIP_TEAM = [
   },
   {
     name: "Seth Boadu",
-    role: "Co-Founder & Fullstack Developer",
+    role: "Co-Founder & DevOps Engineer",
     title: "Co-Founder & Core Architecture",
     bio: "Steers Braxvio’s core technological foundations, specializing in scalable system architecture, resilient backend infrastructure, and high-performance cross-platform applications.",
     focus: "Core Platform Architecture & Fullstack Engineering",
@@ -32,7 +32,7 @@ const LEADERSHIP_TEAM = [
   },
   {
     name: "Alex Nyanteng",
-    role: "Fullstack Developer & Systems Engineer",
+    role: "Fullstack Developer & AI integration Engineer",
     title: "Systems & Performance",
     bio: "Dedicated to building durable digital systems. Crafts end-to-end web architectures, secure database protocols, and seamless interfaces across the Braxvio product suite.",
     focus: "Fullstack Systems & Application Performance",
@@ -98,13 +98,13 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
               <p>
-                Sub-Saharan Africa is experiencing unprecedented technological acceleration—yet essential everyday infrastructure remains deeply fractured.
+                Sub-Saharan Africa is experiencing unprecedented technological acceleration yet essential everyday infrastructure remains deeply fractured.
               </p>
               <p>
                 In many emerging economies, smartphones have arrived before reliable postal addressing, predictable public transit, or connected pharmacy inventory systems. Millions of students attend universities where finding safe housing still involves exploitative physical middlemen. Patients travel between five pharmacies to locate verified medication. Talented developers face punitive international banking barriers just to receive payments for their work.
               </p>
               <p>
-                Most technology initiatives attempt to solve these issues by building quick, disposable consumer apps—spending capital on superficial user acquisition while leaving root infrastructural friction untouched.
+                Most technology initiatives attempt to solve these issues by building quick, disposable consumer apps spending capital on superficial user acquisition while leaving root infrastructural friction untouched.
               </p>
               <p className="font-semibold text-[var(--text-primary)]">
                 Braxvio exists to identify these structural fractures and engineer focused, durable technology platforms around them.
