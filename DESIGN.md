@@ -7,77 +7,95 @@
 - Primary Visual Reference: `ui/` directory (`desktop-full (1).png`, `hero-desktop.png`, `cta-desktop.png`, `faq-desktop.png`, `pricing-desktop.png`, `footer-desktop.png`, `mobile-full.png`) modeled on the precision and craft of GitNimble.
 - Aesthetic Direction: **Architectural Editorialism** — minimal, tactile, precise, engineering-driven, editorial, and quietly confident.
 - Tone: Institutional credibility, durability, long-term horizons, and genuine product substance.
+- One colour family: the brand blue sampled from the Braxvio mark, on warm-neutral greys. No green, amber, sky or purple accents anywhere in the UI. Semantic red is reserved for form errors.
 
 ## Design Tokens
 
-### Color Palette (CSS Custom Properties)
+### Color Palette (CSS Custom Properties, `src/app/globals.css`)
 
 ```css
 :root {
-  --bg-primary: #F7F6F2;
-  --bg-secondary: #EFEEE8;
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #F3F4F5;
   --surface-elevated: #FFFFFF;
-  --surface-contrast: #141513;
-  --text-primary: #171816;
-  --text-secondary: #5C5D57;
-  --text-tertiary: #878880;
-  --border-subtle: #E6E4DC;
-  --border-strong: #DCDAD2;
-  --accent-primary: #1B4E66;
-  --accent-hover: #133A4D;
-  --accent-surface: #EAF1F4;
-  --accent-cobalt: #0066FF;
-  --accent-technical: #38A3B5;
-  --signal-live: #15803D;
-  --signal-beta: #0284C7;
-  --signal-dev: #D97706;
+  --surface-contrast: #121314;
+  --text-primary: #141518;
+  --text-secondary: #4B4F55;
+  --text-tertiary: #6A6E75;
+  --border-subtle: #E6E7EA;
+  --border-strong: #D3D5DA;
+  --accent-cobalt: #0055D4;       /* buttons, fills */
+  --accent-cobalt-hover: #0046AF;
+  --accent-text: #0055D4;         /* links, highlighted words, icons */
+  --accent-surface: #EDF3FD;      /* monogram / avatar tint */
+  --accent-technical: #2B8FB3;    /* hero linework only */
+  --status-live: #0055D4;
+  --status-muted: #8B9097;
+  --danger: #B42318;
+  --danger-surface: #FEF3F2;
+  --focus-ring: #0055D4;
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0D0E0F;
-  --bg-secondary: #141618;
-  --surface-elevated: #191B1E;
-  --surface-contrast: #FAF9F5;
-  --text-primary: #EDEDEA;
-  --text-secondary: #9FA199;
-  --text-tertiary: #6E706A;
-  --border-subtle: #24272B;
-  --border-strong: #32363C;
-  --accent-primary: #38BDF8;
-  --accent-hover: #7DD3FC;
-  --accent-surface: #102A38;
-  --accent-cobalt: #3B82F6;
-  --accent-technical: #2DD4BF;
-  --signal-live: #22C55E;
-  --signal-beta: #38BDF8;
-  --signal-dev: #F59E0B;
+  --bg-primary: #0C0D0F;
+  --bg-secondary: #141518;
+  --surface-elevated: #17191C;
+  --surface-contrast: #F5F5F4;
+  --text-primary: #F2F3F5;
+  --text-secondary: #AEB3BA;
+  --text-tertiary: #878C94;
+  --border-subtle: #24272C;
+  --border-strong: #33373E;
+  --accent-cobalt: #2563EB;
+  --accent-cobalt-hover: #1D4ED8;
+  --accent-text: #7AAEFF;         /* lighter so links pass 4.5:1 on dark surfaces */
+  --accent-surface: #142441;
+  --accent-technical: #4AA9CF;
+  --status-live: #5B9BFF;
+  --status-muted: #6E737B;
+  --danger: #F97066;
+  --danger-surface: #2A1413;
+  --focus-ring: #7AAEFF;
 }
 ```
+
+- `dark:` utilities follow `[data-theme="dark"]` (the site toggle), via `@custom-variant dark` in `globals.css`.
+- The saved theme is applied by an inline script in `layout.tsx` before first paint.
 
 ### Typography Hierarchy
 
 - **Font Family**: `var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
-- **Monospace Family**: `var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`
-- **Display**: 44px (mobile) / 64px–72px (desktop), tracking -0.035em, line-height 1.08, font-weight 700.
-- **H1**: 32px (mobile) / 44px (desktop), tracking -0.025em, line-height 1.15, font-weight 600.
-- **H2**: 24px (mobile) / 32px (desktop), tracking -0.02em, line-height 1.25, font-weight 600.
-- **H3**: 18px (mobile) / 20px (desktop), tracking -0.015em, line-height 1.35, font-weight 600.
-- **Body**: 15px–16px, line-height 1.625, tracking -0.01em, font-weight 400.
-- **Caption / Meta**: 12px–13px, line-height 1.45, font-weight 500.
+- **Monospace**: Geist Mono, used only for `<kbd>` keyboard hints. Never as decoration for labels, metadata or "technical" flavour.
+- **Display / page H1**: 40px (mobile) / 52–68px (desktop), tracking -0.035em, line-height ~1.06, weight 700. One highlighted phrase may use `--accent-text`.
+- **Section H2**: 30px (mobile) / 36–48px (desktop), tracking -0.025em, line-height 1.1–1.2, weight 700.
+- **H3**: 17–22px, tracking -0.015em, weight 600.
+- **Body**: 15–18px, line-height 1.625, measure ≤ 68ch.
+- **Meta / labels**: 13–14px sentence case, `--text-tertiary`. No uppercase tracking-wide labels.
 
 ### Spacing & Layout Geometry
 
-- **Max Content Width**: 1240px (constrained, high-legibility desktop reading container).
-- **Grid**: Responsive 12-column layout with fluid gutters (16px mobile, 32px desktop).
-- **Corner Radii**:
-  - Buttons / Controls: Full pill (`rounded-full`) for CTAs; 8px (`rounded-lg`) for input fields and cards.
-  - Windows / Mockup Panels: 16px (`rounded-2xl`) with subtle 1px border and soft diffused elevation.
-- **Dividers**: 1px crisp borders matching `--border-subtle`. No heavy offset shadows.
+- **Max Content Width**: 1240px (`.content-container`, layered so `max-w-*` utilities narrow it per page).
+- **Grid**: Responsive 12-column layout with fluid gutters (20px mobile, 32px desktop).
+- **Corner Radii**: pills only for buttons and small controls; 10px inputs; 16px (`rounded-2xl`) cards, windows and banners.
+- **Elevation**: cards use a 1px border, no shadow. Only floating mockups (hero window, command palette) carry an offset soft shadow.
+- **Dividers**: 1px `--border-subtle`; `--border-strong` for the top rule of ruled lists.
 
-### Interactive Components & States
+## Composition Rules
 
-- **Primary Button**: Solid vibrant accent, pill geometry, white text, subtle hover lift, visible keyboard focus ring.
-- **Secondary Button**: Elevated surface with 1px border, primary text, subtle hover background change.
-- **Accordion (FAQ)**: Border-bottom separated list items with smooth height transitions, rotating chevron icon, and full keyboard accessibility.
-- **Mockup Terminal / Window**: macOS window header with red/yellow/green indicator lights, title text, and clean interactive panes.
-- **Status Badges**: Small rounded pill tags with subtle tinted background and colored indicator dot for venture states (Live, Private Beta, In Development).
+- **No eyebrows or kickers.** No pill or small-caps label above a heading; the heading carries the section.
+- **No decorative numbering.** Numbers only where order matters (the 5-step partnership process).
+- **No pseudo-technical labels** (`foo.console // bar`, `system.runtime.spec`, "Cluster Healthy", "Ledger"). Use plain language.
+- **Ruled lists over icon cards.** Principles, pillars and disciplines are lists with a top hairline, not same-size boxes.
+- **No nested cards.**
+
+## Interactive Components & States
+
+- **Buttons** (`.btn` + `.btn-primary` / `.btn-secondary`, optional `.btn-sm`): pill, 44px min height (36px small), hover colour shift, 0.98 press, disabled at 60% opacity, spinner while submitting.
+- **Links** (`.link-accent`): `--accent-text`, semibold, underline on hover.
+- **Fields** (`.field`, `.field-label`, `.form-error`): sentence-case labels above inputs, "(optional)" marks optional fields, errors announced with `role="alert"`.
+- **Focus**: 2px `--focus-ring` outline, 2px offset, on every interactive element.
+- **Venture status** (`VentureStatus`): neutral text with a 7px dot. Live = solid `--status-live`; Private Beta = solid `--status-muted`; In Development = hollow `--status-muted` ring. No tinted pill backgrounds.
+- **Accordion (FAQ)**: hairline-separated items, grid-row height transition, `aria-expanded` / `aria-controls`.
+- **Hero venture window**: macOS chrome, venture switcher with `aria-pressed`, 30s auto-rotation driven by a progress underline, Pause/Resume control, pauses on hover and keyboard focus, off under reduced motion.
+- **Command palette** (⌘K / Ctrl K): venture rows come from `content/ventures.ts`, grouped results, combobox + listbox semantics.
+- **Venture cards** (`VentureCard`): whole card is the link target (stretched link).

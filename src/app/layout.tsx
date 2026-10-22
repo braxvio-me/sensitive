@@ -92,6 +92,8 @@ export const metadata: Metadata = {
 
 import { CommandPaletteProvider } from "@/components/navigation/GlobalCommandPalette";
 
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem("braxvio-theme");var d=t==="dark"||(t==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.setAttribute("data-theme",d?"dark":"light");r.classList.toggle("dark",d)}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: {
@@ -100,9 +102,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="light"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Applies the saved theme before first paint so dark mode never flashes light */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
+      </head>
       <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
         <ThemeProvider>
           <CommandPaletteProvider>

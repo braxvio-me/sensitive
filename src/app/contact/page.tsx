@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Send, CheckCircle2, AlertCircle, ShieldCheck } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, ArrowUpRight, Loader2, MessageCircle } from "lucide-react";
 import { VENTURES_DATA } from "@/content/ventures";
 
 const INQUIRY_TYPES = [
@@ -85,14 +86,17 @@ function ContactFormInner() {
   };
 
   return (
-    <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-lg mb-12">
+    <div className="p-6 sm:p-10 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
+      <h2 id="inquiry-form" className="text-[24px] font-semibold text-[var(--text-primary)] tracking-tight mb-8">
+        Send an inquiry
+      </h2>
       {status === "success" ? (
-        <div className="p-10 text-center">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-3">
-            Message Dispatched
-          </h2>
-          <p className="text-base text-[var(--text-secondary)] max-w-md mx-auto mb-8 leading-relaxed">
+        <div role="status" className="py-10 text-center">
+          <CheckCircle2 className="w-10 h-10 text-[var(--accent-text)] mx-auto mb-4" strokeWidth={1.75} />
+          <h3 className="text-[20px] font-semibold text-[var(--text-primary)] mb-2">
+            Message sent
+          </h3>
+          <p className="text-[15px] text-[var(--text-secondary)] max-w-md mx-auto mb-7 leading-relaxed">
             Thank you for initiating this conversation. Your inquiry has been routed to our institutional coordination team for review.
           </p>
           <button
@@ -111,7 +115,7 @@ function ContactFormInner() {
                 honeypot: "",
               });
             }}
-            className="px-7 py-3 rounded-full text-xs font-semibold bg-[var(--surface-elevated)] border border-[var(--border-strong)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
+            className="btn btn-secondary btn-sm"
           >
             Send Another Inquiry
           </button>
@@ -135,36 +139,38 @@ function ContactFormInner() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Your Name *
+                Your name
               </label>
               <input
                 id="name"
                 required
                 type="text"
+                autoComplete="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Marcus Garvey"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Email Address *
+                Email
               </label>
               <input
                 id="email"
                 required
                 type="email"
+                autoComplete="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="marcus@organization.com"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               />
             </div>
           </div>
@@ -174,26 +180,27 @@ function ContactFormInner() {
             <div>
               <label
                 htmlFor="organization"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Organization / Entity (Optional)
+                Organization <span className="optional">(optional)</span>
               </label>
               <input
                 id="organization"
                 type="text"
+                autoComplete="organization"
                 value={formData.organization}
                 onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                 placeholder="Enterprise Corp / Research Lab"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               />
             </div>
 
             <div>
               <label
                 htmlFor="subject"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Subject
+                Subject <span className="optional">(optional)</span>
               </label>
               <input
                 id="subject"
@@ -201,7 +208,7 @@ function ContactFormInner() {
                 value={formData.subject}
                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                 placeholder="Brief summary of inquiry"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               />
             </div>
           </div>
@@ -211,15 +218,15 @@ function ContactFormInner() {
             <div>
               <label
                 htmlFor="inquiryType"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Purpose of Inquiry *
+                Purpose of inquiry
               </label>
               <select
                 id="inquiryType"
                 value={formData.inquiryType}
                 onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               >
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
@@ -232,17 +239,17 @@ function ContactFormInner() {
             <div>
               <label
                 htmlFor="relatedVenture"
-                className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+                className="field-label"
               >
-                Related Venture (If Applicable)
+                Related venture <span className="optional">(optional)</span>
               </label>
               <select
                 id="relatedVenture"
                 value={formData.relatedVenture}
                 onChange={(e) => setFormData({ ...formData, relatedVenture: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-cobalt)]"
+                className="field"
               >
-                <option value="">General Parent Company Dialogue</option>
+                <option value="">None (general inquiry)</option>
                 {VENTURES_DATA.map((v) => (
                   <option key={v.id} value={v.name}>
                     {v.name} ({v.primaryCategory})
@@ -256,9 +263,9 @@ function ContactFormInner() {
           <div>
             <label
               htmlFor="message"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2"
+              className="field-label"
             >
-              Message *
+              Message
             </label>
             <textarea
               id="message"
@@ -267,39 +274,38 @@ function ContactFormInner() {
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               placeholder="Detail the scope of your inquiry, collaboration model, or questions..."
-              className="w-full px-4 py-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent-cobalt)] resize-y"
+              className="field resize-y"
             />
           </div>
 
           {/* Privacy Consent */}
-          <div className="flex items-start gap-3 pt-2">
+          <div className="flex items-start gap-3">
             <input
               id="privacyConsent"
               type="checkbox"
               required
               checked={formData.privacyConsent}
               onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
-              className="mt-1 w-4 h-4 rounded border-[var(--border-strong)] text-[var(--accent-cobalt)] focus:ring-[var(--accent-cobalt)]"
+              className="mt-1 size-4 shrink-0 cursor-pointer"
             />
-            <label htmlFor="privacyConsent" className="text-xs text-[var(--text-secondary)] leading-relaxed">
+            <label htmlFor="privacyConsent" className="text-[14px] text-[var(--text-secondary)] leading-relaxed cursor-pointer">
               I agree that Braxvio may process my details to respond to this institutional communication. Braxvio upholds strict privacy standards and will not share or monetize submitted records.
             </label>
           </div>
 
           {errorMessage && (
-            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div role="alert" className="form-error">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={status === "submitting"}
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all disabled:opacity-50 shadow-sm cursor-pointer"
-          >
+          <button type="submit" disabled={status === "submitting"} className="btn btn-primary w-full sm:w-auto px-7">
             {status === "submitting" ? (
-              <span>Transmitting...</span>
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Sending…
+              </>
             ) : (
               <>
                 <span>Submit Inquiry</span>
@@ -315,84 +321,87 @@ function ContactFormInner() {
 
 export default function ContactPage() {
   return (
-    <div className="py-16 md:py-24">
+    <div className="pt-10 md:pt-20 pb-16 md:pb-24">
       <div className="content-container max-w-5xl">
-        {/* Header */}
-        <div className="mb-14 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-4">
-            Communication Channels
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-tight mb-5">
+        <header className="max-w-3xl mb-14">
+          <h1 className="text-[40px] sm:text-[52px] font-bold text-[var(--text-primary)] tracking-[-0.035em] leading-[1.06] mb-5">
             Let&apos;s build the future thoughtfully.
           </h1>
-          <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-normal">
+          <p className="text-[18px] sm:text-[19px] text-[var(--text-secondary)] leading-relaxed">
             Whether exploring ecosystem partnerships, press inquiries, or institutional collaboration, our team is at your disposal.
           </p>
-        </div>
+        </header>
 
-        {/* Channels & HQ Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Card 1: Headquarters */}
-          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
-            <div>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-technical)] mb-2">Headquarters</div>
-              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Braxvio Technologies</h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+          {/* Channels */}
+          <aside className="lg:col-span-4 space-y-8 lg:pt-2">
+            <section>
+              <h2 className="text-[15px] font-semibold text-[var(--text-primary)] mb-2">Headquarters</h2>
+              <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">
+                Braxvio Technologies
+                <br />
                 Accra, Greater Accra Region, Ghana
               </p>
-            </div>
-            <div className="pt-3 border-t border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-tertiary)]">
-              Lat: 5.6037° N • Long: 0.1870° W
-            </div>
-          </div>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=5.6037,-0.1870"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-accent text-[14px] mt-2"
+              >
+                Open in Google Maps
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </section>
 
-          {/* Card 2: Direct Inboxes */}
-          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
-            <div>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-technical)] mb-2">Direct Inboxes</div>
-              <div className="space-y-1.5 text-xs text-[var(--text-secondary)] font-mono">
-                <div>Partnerships: <a href="mailto:partnerships@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">partnerships@braxvio.com</a></div>
-                <div>Press & Media: <a href="mailto:press@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">press@braxvio.com</a></div>
-                <div>General / Desk: <a href="mailto:admin@braxvio.com" className="text-[var(--text-primary)] hover:text-[var(--accent-technical)] underline">admin@braxvio.com</a></div>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-tertiary)]">
-              Careers: <a href="mailto:jobs@braxvio.com" className="hover:underline">jobs@braxvio.com</a>
-            </div>
-          </div>
+            <section className="pt-8 border-t border-[var(--border-subtle)]">
+              <h2 className="text-[15px] font-semibold text-[var(--text-primary)] mb-3">Email</h2>
+              <dl className="space-y-3 text-[15px]">
+                {[
+                  { label: "Partnerships", email: "partnerships@braxvio.com" },
+                  { label: "Press & media", email: "press@braxvio.com" },
+                  { label: "General", email: "admin@braxvio.com" },
+                  { label: "Careers", email: "jobs@braxvio.com" },
+                ].map((inbox) => (
+                  <div key={inbox.email}>
+                    <dt className="text-[13px] text-[var(--text-tertiary)]">{inbox.label}</dt>
+                    <dd>
+                      <a href={`mailto:${inbox.email}`} className="text-[var(--text-primary)] hover:text-[var(--accent-text)] underline decoration-[var(--border-strong)] hover:decoration-current transition-colors break-all">
+                        {inbox.email}
+                      </a>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
 
-          {/* Card 3: Instant Communication */}
-          <div className="p-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] flex flex-col justify-between">
-            <div>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-500 mb-2">Direct Message</div>
-              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Chat on WhatsApp</h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-4">
+            <section className="pt-8 border-t border-[var(--border-subtle)]">
+              <h2 className="text-[15px] font-semibold text-[var(--text-primary)] mb-2">WhatsApp</h2>
+              <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed mb-4">
                 Connect directly with our team for prompt partnership and project discussions.
               </p>
-            </div>
-            <a
-              href="https://wa.me/qr/V2VVDKVB7J7WL1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300 hover:bg-[#D1FAE5] dark:hover:bg-[#065F46] border border-emerald-200 dark:border-emerald-700 transition-colors w-full"
-            >
-              Open WhatsApp Dialogue →
-            </a>
-          </div>
-        </div>
+              <a
+                href="https://wa.me/qr/V2VVDKVB7J7WL1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary btn-sm"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Chat on WhatsApp
+              </a>
+            </section>
+          </aside>
 
-        {/* Suspense boundary for useSearchParams */}
-        <Suspense fallback={<div className="p-12 text-center text-sm text-[var(--text-tertiary)]">Loading form...</div>}>
-          <ContactFormInner />
-        </Suspense>
+          <div className="lg:col-span-8">
+            {/* Suspense boundary for useSearchParams */}
+            <Suspense fallback={<div className="p-12 text-center text-[14px] text-[var(--text-tertiary)]">Loading form…</div>}>
+              <ContactFormInner />
+            </Suspense>
 
-        {/* Responsible Routing Note */}
-        <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/50 text-xs text-[var(--text-tertiary)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Encrypted endpoint routing compliant with Ghana Data Protection Act 2012 (Act 843).</span>
+            <p className="mt-5 text-[13.5px] text-[var(--text-tertiary)] leading-relaxed">
+              Submissions are handled in line with the Ghana Data Protection Act 2012 (Act 843). See our{" "}
+              <Link href="/privacy" className="underline hover:text-[var(--text-primary)]">privacy policy</Link>.
+            </p>
           </div>
-          <span className="font-mono">routing.braxvio.institutional</span>
         </div>
       </div>
     </div>

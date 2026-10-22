@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Globe, Layers, ShieldCheck, Compass, Hammer, ExternalLink, MapPin, Calendar, Award } from "lucide-react";
+import { ArrowRight, Globe, Layers, ShieldCheck, ArrowUpRight, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About — Company & Leadership",
@@ -13,266 +13,225 @@ const LEADERSHIP_TEAM = [
   {
     name: "Michael Kwesi Annor",
     role: "Founder & Chief Executive Officer",
-    title: "Fullstack Developer & Entrepreneur",
     bio: "Directs Braxvio’s overarching vision, platform architecture, and product engineering initiatives across Africa and global markets.",
     focus: "Ecosystem Architecture, Executive Strategy & Product Engineering",
     linkedin: "https://gh.linkedin.com/in/michael-annor-412012300",
     initials: "MKA",
-    badge: "Founder & CEO"
   },
   {
     name: "Seth Boadu",
     role: "Co-Founder & DevOps Engineer",
-    title: "Co-Founder & Core Architecture",
     bio: "Steers Braxvio’s core technological foundations, specializing in scalable system architecture, resilient backend infrastructure, and high-performance cross-platform applications.",
     focus: "Core Platform Architecture & Fullstack Engineering",
     linkedin: "https://linkedin.com/company/braxvio",
     initials: "SB",
-    badge: "Co-Founder"
   },
   {
     name: "Alex Nyanteng",
     role: "Fullstack Developer & AI integration Engineer",
-    title: "Systems & Performance",
     bio: "Dedicated to building durable digital systems. Crafts end-to-end web architectures, secure database protocols, and seamless interfaces across the Braxvio product suite.",
     focus: "Fullstack Systems & Application Performance",
     linkedin: "https://linkedin.com/company/braxvio",
     initials: "AN",
-    badge: "Core Directorate"
   },
   {
     name: "Nirvana",
     role: "Fullstack Developer & Core Engineer",
-    title: "Distributed Infrastructure",
     bio: "Champions clean architecture, real-time distributed data pipelines, and responsive frontend systems engineered for high-growth digital environments.",
     focus: "Fullstack Engineering & Distributed Web Infrastructure",
     linkedin: "https://linkedin.com/company/braxvio",
     initials: "N",
-    badge: "Core Directorate"
-  }
+  },
+];
+
+const COMPANY_FACTS = [
+  { label: "Founded", value: "2024" },
+  { label: "Headquarters", value: "Accra, Ghana" },
+  { label: "Structure", value: "Parent technology company" },
+];
+
+const OPERATING_PILLARS = [
+  {
+    icon: MapPin,
+    title: "Accra, Ghana Engineering Hub",
+    description: "Home base for our core architecture, empirical field research, and systems engineering.",
+  },
+  {
+    icon: Layers,
+    title: "4 Core Focus Domains",
+    description: "Campus life, healthcare supply chains, urban sanitation, and cross-border developer payment rails.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Zero Data Reselling",
+    description: "Student and patient records remain strictly sovereign and protected under the Ghana Data Protection Act 2012 (Act 843).",
+  },
+  {
+    icon: Globe,
+    title: "Offline-First Resilience",
+    description: "Engineered specifically for intermittent cellular networks, high packet loss, and zero-bloat edge delivery.",
+  },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="py-16 md:py-24">
+    <div className="pt-10 md:pt-20 pb-16 md:pb-24">
       <div className="content-container max-w-5xl">
-        {/* Header Badge & Title */}
-        <div className="mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-4">
-            About Braxvio Technologies
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] tracking-tight mb-6 leading-tight">
-            Technology should <span className="text-[var(--accent-technical)]">move life forward.</span>
+        {/* Header */}
+        <header className="mb-14 md:mb-28">
+          <h1 className="text-[40px] sm:text-[52px] lg:text-[64px] font-bold text-[var(--text-primary)] tracking-[-0.035em] leading-[1.06] mb-6 max-w-4xl">
+            Technology should <span className="text-[var(--accent-text)]">move life forward.</span>
           </h1>
-          <p className="text-lg sm:text-xl text-[var(--text-secondary)] leading-relaxed font-normal max-w-3xl mb-8">
+          <p className="text-[18px] sm:text-[20px] text-[var(--text-secondary)] leading-relaxed max-w-3xl mb-10">
             Braxvio is a parent technology company creating digital products, platforms, and infrastructure around the evolving needs of people, businesses, and communities.
           </p>
 
-          {/* Quick Meta Stats Badge Bar */}
-          <div className="flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] bg-[var(--surface-elevated)] p-4 rounded-2xl border border-[var(--border-subtle)]">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[var(--accent-technical)]" />
-              <span>Founded: <strong className="text-[var(--text-primary)]">2024</strong></span>
-            </div>
-            <span className="text-[var(--border-subtle)]">•</span>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-[var(--accent-technical)]" />
-              <span>HQ: <strong className="text-[var(--text-primary)]">Accra, Ghana</strong> (5.6037° N, 0.1870° W)</span>
-            </div>
-            <span className="text-[var(--border-subtle)]">•</span>
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-[var(--accent-technical)]" />
-              <span>Status: <strong className="text-[var(--text-primary)]">Parent Technology Co.</strong></span>
-            </div>
-          </div>
-        </div>
+          <dl className="grid grid-cols-1 sm:grid-cols-3 border-y border-[var(--border-subtle)] divide-y sm:divide-y-0 sm:divide-x divide-[var(--border-subtle)]">
+            {COMPANY_FACTS.map((fact) => (
+              <div key={fact.label} className="py-4 sm:px-5 sm:first:pl-0">
+                <dt className="text-[13px] text-[var(--text-tertiary)] mb-0.5">{fact.label}</dt>
+                <dd className="text-[16px] font-semibold text-[var(--text-primary)]">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </header>
 
         {/* Narrative Section: Why Braxvio Exists */}
-        <div className="space-y-12 mb-20">
-          <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-xs">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-[#FFFBEB] dark:bg-[#451A03] mb-4">
-              Origin & Rationale
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-6">
-              Why Braxvio Exists
-            </h2>
-            <div className="space-y-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
-              <p>
-                Sub-Saharan Africa is experiencing unprecedented technological acceleration yet essential everyday infrastructure remains deeply fractured.
-              </p>
-              <p>
-                In many emerging economies, smartphones have arrived before reliable postal addressing, predictable public transit, or connected pharmacy inventory systems. Millions of students attend universities where finding safe housing still involves exploitative physical middlemen. Patients travel between five pharmacies to locate verified medication. Talented developers face punitive international banking barriers just to receive payments for their work.
-              </p>
-              <p>
-                Most technology initiatives attempt to solve these issues by building quick, disposable consumer apps spending capital on superficial user acquisition while leaving root infrastructural friction untouched.
-              </p>
-              <p className="font-semibold text-[var(--text-primary)]">
-                Braxvio exists to identify these structural fractures and engineer focused, durable technology platforms around them.
-              </p>
-              <p>
-                We do not invent artificial problems to fit speculative tech trends. We observe where people lose hours of productive time, where scams persist, and where essential utilities break down. Then we engineer systems that make life work quietly, reliably, and with dignity.
-              </p>
-            </div>
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-14 md:mb-28">
+          <h2 className="lg:col-span-4 text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight leading-tight lg:sticky lg:top-28 self-start">
+            Why Braxvio Exists
+          </h2>
+          <div className="lg:col-span-8 space-y-5 text-[17px] sm:text-[18px] text-[var(--text-secondary)] leading-relaxed max-w-[65ch]">
+            <p>
+              Sub-Saharan Africa is experiencing unprecedented technological acceleration yet essential everyday infrastructure remains deeply fractured.
+            </p>
+            <p>
+              In many emerging economies, smartphones have arrived before reliable postal addressing, predictable public transit, or connected pharmacy inventory systems. Millions of students attend universities where finding safe housing still involves exploitative physical middlemen. Patients travel between five pharmacies to locate verified medication. Talented developers face punitive international banking barriers just to receive payments for their work.
+            </p>
+            <p>
+              Most technology initiatives attempt to solve these issues by building quick, disposable consumer apps spending capital on superficial user acquisition while leaving root infrastructural friction untouched.
+            </p>
+            <p className="text-[20px] sm:text-[22px] font-semibold text-[var(--text-primary)] leading-snug tracking-tight py-2">
+              Braxvio exists to identify these structural fractures and engineer focused, durable technology platforms around them.
+            </p>
+            <p>
+              We do not invent artificial problems to fit speculative tech trends. We observe where people lose hours of productive time, where scams persist, and where essential utilities break down. Then we engineer systems that make life work quietly, reliably, and with dignity.
+            </p>
           </div>
+        </section>
 
-          {/* Mission & Vision Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
-              <div className="text-xs font-mono uppercase tracking-wider text-[var(--accent-technical)] mb-2">Core Directive // Mission</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-3">
+        {/* Mission & Vision */}
+        <dl className="mb-14 md:mb-28 border-t border-[var(--border-strong)]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-12 py-8 border-b border-[var(--border-subtle)]">
+            <dt className="lg:col-span-4 text-[15px] font-semibold text-[var(--text-primary)]">Mission</dt>
+            <dd className="lg:col-span-8">
+              <p className="text-[22px] sm:text-[26px] font-semibold text-[var(--text-primary)] tracking-tight leading-snug mb-3">
                 Build technology that makes everyday systems work better.
-              </h3>
-              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+              </p>
+              <p className="text-[16px] text-[var(--text-secondary)] leading-relaxed max-w-[60ch]">
                 We engineer scalable, secure, and intuitive platforms that remove operational friction from education, healthcare, logistics, and digital work.
               </p>
-            </div>
-
-            <div className="p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]">
-              <div className="text-xs font-mono uppercase tracking-wider text-emerald-500 mb-2">Long-Term // Vision</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-3">
+            </dd>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-12 py-8 border-b border-[var(--border-subtle)]">
+            <dt className="lg:col-span-4 text-[15px] font-semibold text-[var(--text-primary)]">Vision</dt>
+            <dd className="lg:col-span-8">
+              <p className="text-[22px] sm:text-[26px] font-semibold text-[var(--text-primary)] tracking-tight leading-snug mb-3">
                 A future where technology expands what people can do.
-              </h3>
-              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+              </p>
+              <p className="text-[16px] text-[var(--text-secondary)] leading-relaxed max-w-[60ch]">
                 An interconnected digital ecosystem where location, currency, and systemic fragmentation never restrict human potential and daily dignity.
               </p>
-            </div>
+            </dd>
           </div>
-        </div>
+        </dl>
 
         {/* Leadership & Governance Section */}
-        <div className="mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-3">
-              Governance & Stewardship
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-4">
+        <section className="mb-14 md:mb-28">
+          <div className="max-w-2xl mb-10">
+            <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight leading-tight mb-4">
               Meet the Stewards of Braxvio
             </h2>
-            <p className="text-base text-[var(--text-secondary)]">
+            <p className="text-[17px] text-[var(--text-secondary)] leading-relaxed">
               Braxvio is steered by builders, fullstack engineers, and operators committed to long-term technology craftsmanship, ethical stewardship, and enduring digital infrastructure.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {LEADERSHIP_TEAM.map((member) => (
-              <div
+              <article
                 key={member.name}
-                className="p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] hover:border-[var(--accent-technical)]/40 transition-all flex flex-col justify-between"
+                className="flex flex-col p-6 sm:p-7 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]"
               >
-                <div>
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-[var(--accent-technical)]/10 text-[var(--accent-technical)] flex items-center justify-center font-bold text-lg font-mono">
-                        {member.initials}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-[var(--text-primary)] leading-snug">
-                          {member.name}
-                        </h3>
-                        <p className="text-xs font-semibold text-[var(--accent-technical)]">
-                          {member.role}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
-                      {member.badge}
-                    </span>
+                <div className="flex items-center gap-4 mb-5">
+                  <div
+                    aria-hidden="true"
+                    className="grid place-items-center size-12 rounded-full bg-[var(--accent-surface)] text-[var(--accent-text)] font-semibold text-[15px] shrink-0"
+                  >
+                    {member.initials}
                   </div>
-
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
-                    {member.bio}
-                  </p>
+                  <div className="min-w-0">
+                    <h3 className="text-[19px] font-semibold text-[var(--text-primary)] tracking-tight leading-snug">
+                      {member.name}
+                    </h3>
+                    <p className="text-[14px] text-[var(--text-secondary)]">{member.role}</p>
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs">
-                  <div className="text-[var(--text-tertiary)]">
-                    <span className="font-semibold text-[var(--text-secondary)]">Focus:</span> {member.focus}
-                  </div>
+                <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed mb-6">{member.bio}</p>
+
+                <div className="mt-auto pt-4 border-t border-[var(--border-subtle)] flex items-end justify-between gap-4 text-[13.5px]">
+                  <p className="text-[var(--text-tertiary)]">
+                    <span className="font-medium text-[var(--text-secondary)]">Focus:</span> {member.focus}
+                  </p>
                   <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 font-semibold text-[var(--accent-technical)] hover:underline shrink-0 ml-2"
+                    aria-label={`${member.name} on LinkedIn`}
+                    className="link-accent shrink-0"
                   >
                     LinkedIn
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Operating Pillars */}
-        <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-xs mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-6">
+        <section className="mb-20 md:mb-24">
+          <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight mb-10">
             Four Operating Pillars
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-              <div className="p-2.5 rounded-xl bg-[var(--surface-elevated)] text-[var(--accent-cobalt)] w-fit mb-3">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">
-                Accra, Ghana Engineering Hub
-              </h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Home base for our core architecture, empirical field research, and systems engineering.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-              <div className="p-2.5 rounded-xl bg-[var(--surface-elevated)] text-[var(--accent-cobalt)] w-fit mb-3">
-                <Layers className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">
-                4 Core Focus Domains
-              </h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Campus life, healthcare supply chains, urban sanitation, and cross-border developer payment rails.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-              <div className="p-2.5 rounded-xl bg-[var(--surface-elevated)] text-[var(--accent-cobalt)] w-fit mb-3">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">
-                Zero Data Reselling
-              </h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Student and patient records remain strictly sovereign and protected under the Ghana Data Protection Act 2012 (Act 843).
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-              <div className="p-2.5 rounded-xl bg-[var(--surface-elevated)] text-[var(--accent-cobalt)] w-fit mb-3">
-                <Globe className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">
-                Offline-First Resilience
-              </h3>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                Engineered specifically for intermittent cellular networks, high packet loss, and zero-bloat edge delivery.
-              </p>
-            </div>
-          </div>
-        </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+            {OPERATING_PILLARS.map((pillar) => {
+              const Icon = pillar.icon;
+              return (
+                <li key={pillar.title} className="flex gap-4 pt-6 border-t border-[var(--border-subtle)]">
+                  <Icon className="w-5 h-5 text-[var(--accent-text)] shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <div>
+                    <h3 className="text-[17px] font-semibold text-[var(--text-primary)] tracking-tight mb-1.5">{pillar.title}</h3>
+                    <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">{pillar.description}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
 
         {/* Bottom CTA */}
-        <div className="pt-12 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="pt-10 border-t border-[var(--border-strong)] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">
+            <h2 className="text-[22px] font-semibold text-[var(--text-primary)] tracking-tight mb-1">
               Explore Our Active Ventures
-            </h3>
-            <p className="text-sm text-[var(--text-secondary)]">
+            </h2>
+            <p className="text-[15px] text-[var(--text-secondary)]">
               Discover the independent digital products and platforms built and operated by Braxvio.
             </p>
           </div>
-          <Link
-            href="/ventures"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 transition-all shadow-sm shrink-0"
-          >
+          <Link href="/ventures" className="btn btn-primary shrink-0 self-start sm:self-auto">
             Browse Ventures
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -281,4 +240,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

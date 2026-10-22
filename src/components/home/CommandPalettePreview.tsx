@@ -1,140 +1,80 @@
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { Search, Terminal, ArrowRight, ShieldCheck, Cpu, Code2, Globe } from "lucide-react";
-import { useCommandPalette } from "@/components/navigation/GlobalCommandPalette";
 
-const ACTIONS = [
-  {
-    title: "Inspect Pharmora Supply Chain Ledger",
-    subtitle: "Commerce & Marketplaces · Live API Telemetry",
-    shortcut: "⌘ 1",
-    tag: "Live",
-    tagColor: "bg-[#ECFDF5] dark:bg-[#064E3B] text-emerald-700 dark:text-emerald-300",
-    href: "/ventures/pharmora",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Verify DevPay Africa FX Clearing Latency",
-    subtitle: "Enterprise Software · Multi-currency payout rails",
-    shortcut: "⌘ 2",
-    tag: "Private Beta",
-    tagColor: "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300",
-    href: "/ventures/devpay-africa",
-    icon: Cpu,
-  },
-  {
-    title: "Probe Pellmia Carrier Peering Routes",
-    subtitle: "Digital Infrastructure · Sub-second OTP benchmarks",
-    shortcut: "⌘ 3",
-    tag: "Private Beta",
-    tagColor: "bg-[#EFF6FF] dark:bg-[#1E3A5F] text-sky-700 dark:text-sky-300",
-    href: "/ventures/pellmia",
-    icon: Terminal,
-  },
-  {
-    title: "Review EcoLift Industrial Recycling Nodes",
-    subtitle: "Commerce & Marketplaces · Circular logistics engine",
-    shortcut: "⌘ 4",
-    tag: "In Development",
-    tagColor: "bg-[#FFFBEB] dark:bg-[#451A03] text-amber-700 dark:text-amber-300",
-    href: "/ventures/ecolift",
-    icon: Globe,
-  },
-];
+import React from "react";
+import Link from "next/link";
+import { Search, ArrowRight } from "lucide-react";
+import { useCommandPalette } from "@/components/navigation/GlobalCommandPalette";
+import { getPublishedVentures } from "@/content/ventures";
+import { VentureStatus } from "@/components/ui/VentureStatus";
+import { ShortcutKey } from "@/components/ui/ShortcutKey";
 
 export function CommandPalettePreview() {
-  const [searchTerm, setSearchTerm] = useState("");
   const { open: openGlobalPalette } = useCommandPalette();
-
-  const filteredActions = ACTIONS.filter(
-    (action) =>
-      action.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      action.subtitle.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const ventures = getPublishedVentures();
 
   return (
-    <section className="py-20 bg-[var(--bg-secondary)]/40 border-y border-[var(--border-subtle)]">
+    <section className="py-16 md:py-24 bg-[var(--bg-secondary)] border-y border-[var(--border-subtle)]">
       <div className="content-container">
-        {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-4">
+          <h2 className="text-[30px] sm:text-[40px] font-bold text-[var(--text-primary)] tracking-tight leading-tight mb-4">
             Unified venture governance, one command palette.
           </h2>
-          <p className="text-[16px] text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-[16px] sm:text-[17px] text-[var(--text-secondary)] leading-relaxed">
             Search across portfolio architectures, inspect operational statuses, and explore venture technical profiles with instantaneous keyboard precision.
           </p>
         </div>
 
-        {/* Interactive Floating Command Palette Mockup (matching reference ui/desktop-full (1).png) */}
-        <div className="max-w-2xl mx-auto rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] shadow-xl overflow-hidden">
-          {/* Search Header */}
-          <div
+        {/* Live preview of the site-wide palette: the search row opens the real one */}
+        <div className="max-w-2xl mx-auto rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-elevated)] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.18)] overflow-hidden">
+          <button
+            type="button"
             onClick={openGlobalPalette}
-            className="flex items-center gap-3 px-4 py-3.5 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/30 cursor-pointer hover:bg-[var(--bg-secondary)]/50 transition-colors"
+            className="w-full flex items-center gap-3 px-4 h-14 border-b border-[var(--border-subtle)] text-left hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
           >
-            <Search className="w-5 h-5 text-[var(--text-tertiary)] shrink-0" />
-            <div className="w-full text-sm text-[var(--text-tertiary)] select-none">
-              Search ventures, architecture specs, or protocols...
-            </div>
-            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)] shrink-0">
-              ⌘K
-            </span>
-          </div>
+            <Search className="w-[18px] h-[18px] text-[var(--text-tertiary)] shrink-0" />
+            <span className="flex-1 min-w-0 truncate text-[15px] text-[var(--text-tertiary)]">Search ventures, pages and actions…</span>
+            <ShortcutKey className="pointer-coarse:hidden" />
+          </button>
 
-          {/* Action List */}
-          <div className="p-2 divide-y divide-[var(--border-subtle)]/50 max-h-[320px] overflow-y-auto">
-            {filteredActions.length > 0 ? (
-              filteredActions.map((action, idx) => {
-                const Icon = action.icon;
-                return (
+          <div className="px-2 pt-3 pb-2">
+            <p className="px-3 pb-1.5 text-[12px] font-medium text-[var(--text-tertiary)]">Ventures</p>
+            <ul>
+              {ventures.map((venture) => (
+                <li key={venture.id}>
                   <Link
-                    key={idx}
-                    href={action.href}
-                    className="flex items-center justify-between p-3 rounded-xl hover:bg-[var(--bg-secondary)] transition-colors group cursor-pointer"
+                    href={`/ventures/${venture.slug}`}
+                    className="flex items-center justify-between gap-4 px-3 py-2.5 rounded-lg hover:bg-[var(--bg-secondary)] transition-colors group"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--accent-cobalt)] group-hover:scale-105 transition-transform">
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cobalt)] transition-colors">
-                            {action.title}
-                          </span>
-                          <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${action.tagColor}`}>
-                            {action.tag}
-                          </span>
-                        </div>
-                        <span className="text-xs text-[var(--text-tertiary)]">
-                          {action.subtitle}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs px-2 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)] transition-colors">
-                        {action.shortcut}
+                    <span className="flex items-center gap-3 min-w-0">
+                      <span
+                        aria-hidden="true"
+                        className="grid place-items-center size-8 rounded-lg bg-[var(--accent-surface)] text-[13px] font-semibold text-[var(--accent-text)] shrink-0"
+                      >
+                        {venture.name.charAt(0)}
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
+                      <span className="min-w-0">
+                        <span className="block text-[14.5px] font-medium text-[var(--text-primary)]">{venture.name}</span>
+                        <span className="block text-[13px] text-[var(--text-tertiary)] truncate">{venture.tagline}</span>
+                      </span>
+                    </span>
+                    <span className="flex items-center gap-3 shrink-0">
+                      <span className="hidden sm:block">
+                        <VentureStatus status={venture.status} />
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[var(--text-tertiary)] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </span>
                   </Link>
-                );
-              })
-            ) : (
-              <div className="p-8 text-center text-sm text-[var(--text-tertiary)]">
-                No matching venture actions found for &quot;{searchTerm}&quot;.
-              </div>
-            )}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Command Palette Footer */}
-          <div className="px-4 py-2.5 bg-[var(--bg-secondary)]/60 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] text-[var(--text-tertiary)]">
-            <div className="flex items-center gap-3">
-              <span>Navigation: <kbd className="font-mono">↑</kbd> <kbd className="font-mono">↓</kbd></span>
-              <span>Select: <kbd className="font-mono">↵</kbd></span>
-            </div>
-            <span className="font-mono">Braxvio Global Registry</span>
+          <div className="px-5 py-3 border-t border-[var(--border-subtle)] flex items-center justify-between gap-3 text-[12.5px] text-[var(--text-tertiary)]">
+            <span className="inline-flex items-center gap-1.5 pointer-coarse:hidden">
+              Press <ShortcutKey /> on any page to search
+            </span>
+            <span className="hidden pointer-coarse:inline">Tap the search icon on any page</span>
+            <span className="tabular-nums">{ventures.length} ventures</span>
           </div>
         </div>
       </div>

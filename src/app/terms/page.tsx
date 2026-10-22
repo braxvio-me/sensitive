@@ -8,23 +8,18 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="py-16 md:py-24">
+    <div className="pt-10 md:pt-20 pb-16 md:pb-24">
       <div className="content-container max-w-3xl">
-        <div className="mb-12">
-          <span className="text-xs font-mono uppercase tracking-wider text-[var(--accent-technical)] font-semibold">
-            Legal Architecture // Sovereign Governance
-          </span>
-          <h1 className="text-4xl font-bold text-[var(--text-primary)] tracking-tight mt-2 mb-4">
+        <header className="mb-12 pb-8 border-b border-[var(--border-subtle)]">
+          <h1 className="text-[40px] sm:text-[48px] font-bold text-[var(--text-primary)] tracking-[-0.035em] leading-[1.08] mb-3">
             Terms of Service
           </h1>
-          <p className="text-xs font-mono text-[var(--text-tertiary)] bg-[var(--surface-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]">
-            EFFECTIVE AS OF FEBRUARY 2025 • ACCRA, GHANA
-          </p>
-        </div>
+          <p className="text-[15px] text-[var(--text-tertiary)]">Effective February 2025 · Accra, Ghana</p>
+        </header>
 
-        <div className="space-y-8 text-sm text-[var(--text-secondary)] leading-relaxed">
-          <section className="space-y-3 p-6 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--border-subtle)]">
-            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+        <div className="space-y-10 text-[16px] text-[var(--text-secondary)] leading-relaxed max-w-[68ch]">
+          <section className="space-y-3">
+            <h2 className="text-[20px] font-semibold tracking-tight text-[var(--text-primary)]">
               1. Scope of Agreement
             </h2>
             <p>
@@ -32,8 +27,8 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="space-y-3 p-6 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--border-subtle)]">
-            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+          <section className="space-y-3">
+            <h2 className="text-[20px] font-semibold tracking-tight text-[var(--text-primary)]">
               2. Product-Specific Terms & Regulatory Adherence
             </h2>
             <p>
@@ -41,8 +36,8 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="space-y-3 p-6 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--border-subtle)]">
-            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+          <section className="space-y-3">
+            <h2 className="text-[20px] font-semibold tracking-tight text-[var(--text-primary)]">
               3. Intellectual Property
             </h2>
             <p>
@@ -50,13 +45,13 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="space-y-3 p-6 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--border-subtle)]">
-            <h2 className="text-lg font-bold text-[var(--text-primary)]">
+          <section className="space-y-3">
+            <h2 className="text-[20px] font-semibold tracking-tight text-[var(--text-primary)]">
               4. Direct Desk Communication
             </h2>
             <p>
               Inquiries regarding contractual agreements, regulatory licenses, or intellectual property rights should be transmitted directly to{" "}
-              <a href="mailto:admin@braxvio.com" className="text-[var(--accent-technical)] underline">
+              <a href="mailto:admin@braxvio.com" className="text-[var(--accent-text)] underline">
                 admin@braxvio.com
               </a>.
             </p>

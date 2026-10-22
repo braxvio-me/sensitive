@@ -1,23 +1,32 @@
 @import "tailwindcss";
 
+/* `dark:` utilities follow the site's theme toggle, not only the OS setting */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --bg-primary: #FAFAFA;
-  --bg-secondary: #F4F4F5;
+  --bg-secondary: #F3F4F5;
   --surface-elevated: #FFFFFF;
   --surface-contrast: #121314;
-  --text-primary: #161718;
-  --text-secondary: #4E5155;
-  --text-tertiary: #71757B;
-  --border-subtle: #EAEAEA;
-  --border-strong: #D6D8DC;
-  --accent-primary: #1B4E66;
-  --accent-hover: #133A4D;
-  --accent-surface: #F0F4F7;
+  --text-primary: #141518;
+  --text-secondary: #4B4F55;
+  --text-tertiary: #6A6E75;
+  --border-subtle: #E6E7EA;
+  --border-strong: #D3D5DA;
+
+  /* Brand blue, sampled from the Braxvio mark */
   --accent-cobalt: #0055D4;
-  --accent-technical: #0E7490;
-  --signal-live: #15803D;
-  --signal-beta: #0369A1;
-  --signal-dev: #B45309;
+  --accent-cobalt-hover: #0046AF;
+  --accent-text: #0055D4;
+  --accent-surface: #EDF3FD;
+  /* Secondary blue used only by the hero linework */
+  --accent-technical: #2B8FB3;
+
+  --status-live: #0055D4;
+  --status-muted: #8B9097;
+  --danger: #B42318;
+  --danger-surface: #FEF3F2;
+  --focus-ring: #0055D4;
 
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
@@ -25,23 +34,27 @@
 
 [data-theme="dark"],
 .dark {
-  --bg-primary: #0D0E0F;
-  --bg-secondary: #141618;
-  --surface-elevated: #191B1E;
-  --surface-contrast: #FAF9F5;
-  --text-primary: #F3F4F6;
-  --text-secondary: #D1D5DB;
-  --text-tertiary: #9CA3AF;
-  --border-subtle: #24272B;
-  --border-strong: #374151;
-  --accent-primary: #38BDF8;
-  --accent-hover: #7DD3FC;
-  --accent-surface: #102A38;
+  --bg-primary: #0C0D0F;
+  --bg-secondary: #141518;
+  --surface-elevated: #17191C;
+  --surface-contrast: #F5F5F4;
+  --text-primary: #F2F3F5;
+  --text-secondary: #AEB3BA;
+  --text-tertiary: #878C94;
+  --border-subtle: #24272C;
+  --border-strong: #33373E;
+
   --accent-cobalt: #2563EB;
-  --accent-technical: #2DD4BF;
-  --signal-live: #22C55E;
-  --signal-beta: #38BDF8;
-  --signal-dev: #F59E0B;
+  --accent-cobalt-hover: #1D4ED8;
+  --accent-text: #7AAEFF;
+  --accent-surface: #142441;
+  --accent-technical: #4AA9CF;
+
+  --status-live: #5B9BFF;
+  --status-muted: #6E737B;
+  --danger: #F97066;
+  --danger-surface: #2A1413;
+  --focus-ring: #7AAEFF;
 
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
@@ -54,19 +67,169 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* {
-  border-color: var(--border-subtle);
-  box-sizing: border-box;
+@layer base {
+  /* Layered so Tailwind border-color utilities can still override it */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border-subtle);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.625;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    line-height: 1.2;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+
+  input[type="checkbox"] {
+    accent-color: var(--accent-cobalt);
+  }
+
+  kbd {
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
 }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.625;
-  overflow-x: hidden;
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: 0.4375rem 1rem;
+    font-size: 13.5px;
+  }
+
+  .btn-primary {
+    background-color: var(--accent-cobalt);
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--accent-cobalt-hover);
+  }
+
+  .btn-secondary {
+    background-color: var(--surface-elevated);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--bg-secondary);
+  }
+
+  .link-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+
+  .link-accent:hover {
+    text-decoration: underline;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .field-label .optional {
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
+
+  .field {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    /* 16px on phones: iOS Safari zooms the page into any field smaller than this */
+    font-size: 16px;
+    transition: border-color 0.15s ease;
+  }
+
+  @media (min-width: 768px) {
+    .field {
+      font-size: 15px;
+    }
+  }
+
+  .field::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .field:hover {
+    border-color: var(--text-tertiary);
+  }
+
+  .field:focus {
+    border-color: var(--accent-cobalt);
+  }
+
+  .form-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background-color: var(--danger-surface);
+    color: var(--danger);
+    font-size: 14px;
+  }
 }
 
 /* Silky, non-blocking theme transition */
@@ -83,22 +246,10 @@ html.theme-transitioning *::after {
 
 /* Craft floor: theme selection, scrollbars, focus rings */
 ::selection {
-  background-color: #0055D425;
+  background-color: color-mix(in srgb, var(--accent-cobalt) 18%, transparent);
   color: var(--text-primary);
 }
 
-[data-theme="dark"] ::selection,
-.dark ::selection {
-  background-color: #38BDF835;
-  color: #FFFFFF;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent-cobalt);
-  outline-offset: 2px;
-}
-
-/* Custom subtle scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -117,19 +268,61 @@ html.theme-transitioning *::after {
   background: var(--text-tertiary);
 }
 
-/* Container constraints matching reference layout */
-.content-container {
-  width: 100%;
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+.no-scrollbar {
+  scrollbar-width: none;
 }
 
-@media (min-width: 768px) {
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hero venture switcher: the underline fills while a venture is on screen */
+@keyframes venture-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.venture-progress {
+  transform-origin: left center;
+  animation: venture-progress 30s linear forwards;
+}
+
+.venture-progress[data-paused="true"] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .venture-progress {
+    display: none;
+  }
+}
+
+/* Container constraints matching reference layout. Layered so `max-w-*` utilities can narrow it. */
+@layer components {
   .content-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    width: 100%;
+    max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .content-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
 }

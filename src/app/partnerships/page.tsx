@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Building2, Radio, Network, Landmark, CheckCircle2, ShieldCheck, ExternalLink } from "lucide-react";
-import { VENTURES_DATA } from "@/content/ventures";
+import { ArrowRight, Building2, Radio, Network, Landmark, Check, MessageCircle } from "lucide-react";
+import { getPublishedVentures } from "@/content/ventures";
+import { VentureStatus } from "@/components/ui/VentureStatus";
 
 export const metadata: Metadata = {
   title: "Strategic Partnerships & Enterprise Collaboration",
@@ -14,7 +15,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Building2,
     title: "Strategic Partnership",
-    badge: "Discipline 01",
     description:
       "For companies, technology providers, and organizations interested in building deep, long-term operational relationships across the Braxvio ecosystem.",
     benefits: [
@@ -27,7 +27,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Landmark,
     title: "Investment Interest",
-    badge: "Discipline 02",
     description:
       "For qualified individuals, angel syndicates, venture funds, family offices, and institutions exploring potential financial participation in Braxvio or eligible initiatives.",
     benefits: [
@@ -40,7 +39,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Network,
     title: "Product Partnership",
-    badge: "Discipline 03",
     description:
       "Partner directly with an individual Braxvio platform—Kampus, Pharmora, Ecolift, or DevPay Africa—to expand capabilities or serve targeted communities.",
     benefits: [
@@ -54,7 +52,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Radio,
     title: "Technology Partnership",
-    badge: "Discipline 04",
     description:
       "Infrastructure, cloud compute, payment rails, AI models, telecom APIs, identity verification, cold-chain IoT, and specialized technical integrations.",
     benefits: [
@@ -67,7 +64,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Building2,
     title: "Institutional Partnership",
-    badge: "Discipline 05",
     description:
       "For universities, municipal governments, ministries, non-governmental organizations, hospital networks, and financial institutions exploring research or pilot deployments.",
     benefits: [
@@ -80,7 +76,6 @@ const PARTNERSHIP_MODELS = [
   {
     icon: Network,
     title: "Distribution & Market Partnership",
-    badge: "Discipline 06",
     description:
       "For regional distributors, retail networks, trade associations, and localized operators that can accelerate market adoption across African and international borders.",
     benefits: [
@@ -92,250 +87,191 @@ const PARTNERSHIP_MODELS = [
   },
 ];
 
+
+const PARTNERSHIP_PRINCIPLES = [
+  {
+    title: "Sovereignty & Security",
+    description: "We uphold strict data residency, non-disclosure compliance, and enterprise security frameworks across all partner integrations.",
+  },
+  {
+    title: "Structural Utility",
+    description: "Every partnership must deliver quantifiable operational efficiency or economic value to end users and counterparties.",
+  },
+  {
+    title: "Long-Term Alignment",
+    description: "We design contracts, technical interfaces, and governance structures meant to operate reliably over decades.",
+  },
+];
+
+const PARTNERSHIP_STEPS = [
+  { title: "Submit", description: "Tell us about your organization and the collaborative initiative you envision." },
+  { title: "Review", description: "Leadership assesses operational alignment and technical feasibility." },
+  { title: "Discuss", description: "Introductory dialogue to align on mutual capabilities and key milestones." },
+  { title: "Evaluate", description: "Both parties explore technical architecture, scope, and governance." },
+  { title: "Build", description: "Sprint planning, API integration, and joint operational deployment." },
+];
+
 export default function PartnershipsPage() {
-  const publishedVentures = VENTURES_DATA.filter(
-    (v) => v.isVerified && v.isPublished && v.publicationApproved
-  );
+  const publishedVentures = getPublishedVentures();
 
   return (
-    <div className="py-16 md:py-24">
+    <div className="pt-10 md:pt-20 pb-16 md:pb-24">
       <div className="content-container max-w-5xl">
         {/* Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[var(--accent-technical)] bg-[var(--accent-technical)]/10 mb-4">
-            Institutional Collaboration
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--text-primary)] tracking-tight mb-6">
+        <header className="max-w-3xl mb-16 md:mb-24">
+          <h1 className="text-[40px] sm:text-[52px] md:text-[60px] font-bold text-[var(--text-primary)] tracking-[-0.035em] leading-[1.06] mb-6">
             Co-building technology ventures designed to endure.
           </h1>
-          <p className="text-lg sm:text-xl text-[var(--text-secondary)] leading-relaxed font-normal">
+          <p className="text-[18px] sm:text-[20px] text-[var(--text-secondary)] leading-relaxed">
             Braxvio collaborates with industry leaders, telecom operators, financial institutions, and strategic co-investors to architect, pilot, and scale technology infrastructure that solves structural frictions.
           </p>
-        </div>
+        </header>
 
-        {/* 4 Core Collaboration Models */}
-        <div className="mb-24">
+        {/* Collaboration Models */}
+        <section className="mb-14 md:mb-28">
           <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+            <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight mb-3">
               Partnership Pathways
             </h2>
-            <p className="text-sm text-[var(--text-secondary)]">
-              Four structured ways institutions, enterprises, and operators engage with Braxvio and its venture family.
+            <p className="text-[17px] text-[var(--text-secondary)]">
+              Six structured ways institutions, enterprises, and operators engage with Braxvio and its venture family.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {PARTNERSHIP_MODELS.map((model, idx) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {PARTNERSHIP_MODELS.map((model) => {
               const Icon = model.icon;
               return (
-                <div
-                  key={idx}
-                  className="flex flex-col justify-between p-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] hover:border-[var(--border-strong)] transition-all shadow-xs"
+                <article
+                  key={model.title}
+                  className="flex flex-col p-6 sm:p-7 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]"
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-3 mb-5">
-                      <div className="p-3 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--accent-cobalt)]">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <span className="text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[var(--bg-secondary)] text-[var(--text-tertiary)] border border-[var(--border-subtle)]">
-                        {model.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
-                      {model.title}
-                    </h3>
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
-                      {model.description}
-                    </p>
-
-                    <div className="space-y-2 mb-6 pt-4 border-t border-[var(--border-subtle)]">
-                      {model.benefits.map((benefit, bIdx) => (
-                        <div key={bIdx} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                          <span>{benefit}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <Icon className="w-5 h-5 text-[var(--accent-text)] shrink-0" strokeWidth={1.75} />
+                    <h3 className="text-[19px] font-semibold text-[var(--text-primary)] tracking-tight">{model.title}</h3>
                   </div>
+                  <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed mb-5">{model.description}</p>
 
-                  <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--text-tertiary)]">
-                    <span className="font-mono">{model.examples}</span>
-                  </div>
-                </div>
+                  <ul className="space-y-2.5 mb-6">
+                    {model.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-start gap-2.5 text-[14px] text-[var(--text-secondary)] leading-snug">
+                        <Check className="w-4 h-4 text-[var(--accent-text)] shrink-0 mt-px" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="mt-auto pt-4 border-t border-[var(--border-subtle)] text-[13.5px] text-[var(--text-tertiary)]">
+                    {model.examples}
+                  </p>
+                </article>
               );
             })}
           </div>
-        </div>
+        </section>
 
         {/* Portfolio Collaboration Matrix */}
-        <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-md mb-24">
+        <section className="mb-14 md:mb-28">
           <div className="max-w-2xl mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+            <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight mb-3">
               Active Venture Collaboration Opportunities
             </h2>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-[17px] text-[var(--text-secondary)] leading-relaxed">
               Explore immediate deployment and pilot opportunities across verified Braxvio portfolio companies.
             </p>
           </div>
 
-          <div className="divide-y divide-[var(--border-subtle)]">
+          <ul className="border-t border-[var(--border-strong)]">
             {publishedVentures.map((venture) => (
-              <div
+              <li
                 key={venture.id}
-                className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                className="py-6 border-b border-[var(--border-subtle)] flex flex-col md:flex-row md:items-center justify-between gap-5"
               >
                 <div className="max-w-xl">
-                  <div className="flex items-center gap-2.5 mb-1.5">
-                    <h3 className="text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cobalt)] transition-colors">
-                      {venture.name}
-                    </h3>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--bg-secondary)] text-[var(--text-secondary)]">
-                      {venture.primaryCategory}
-                    </span>
-                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300">
-                      {venture.status}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
+                    <h3 className="text-[19px] font-semibold text-[var(--text-primary)] tracking-tight">{venture.name}</h3>
+                    <span className="text-[13px] text-[var(--text-tertiary)]">{venture.primaryCategory}</span>
+                    <VentureStatus status={venture.status} />
                   </div>
-                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                    {venture.summary}
-                  </p>
+                  <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">{venture.summary}</p>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0">
-                  <Link
-                    href={`/ventures/${venture.slug}`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border border-[var(--border-strong)] bg-[var(--surface-elevated)] hover:bg-[var(--bg-secondary)] text-[var(--text-primary)] transition-colors"
-                  >
-                    Inspect Profile
-                    <ArrowRight className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-5 shrink-0">
+                  <Link href={`/ventures/${venture.slug}`} className="link-accent text-[14px]">
+                    View profile
                   </Link>
-
                   <Link
                     href={`/contact?venture=${encodeURIComponent(venture.name)}&type=Strategic+Partnerships`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 transition-colors shadow-xs"
+                    className="btn btn-secondary btn-sm"
                   >
                     Propose Pilot
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </section>
 
         {/* Partnership Principles & Integrity */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-            <h3 className="text-sm font-bold text-[var(--text-primary)] mb-2 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[var(--accent-cobalt)]" />
-              Sovereignty & Security
-            </h3>
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-              We uphold strict data residency, non-disclosure compliance, and enterprise security frameworks across all partner integrations.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-            <h3 className="text-sm font-bold text-[var(--text-primary)] mb-2 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              Structural Utility
-            </h3>
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-              Every partnership must deliver quantifiable operational efficiency or economic value to end users and counterparties.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)]">
-            <h3 className="text-sm font-bold text-[var(--text-primary)] mb-2 flex items-center gap-2">
-              <Landmark className="w-4 h-4 text-amber-600" />
-              Long-Term Alignment
-            </h3>
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-              We design contracts, technical interfaces, and governance structures meant to operate reliably over decades.
-            </p>
-          </div>
-        </div>
+        <section className="mb-14 md:mb-28">
+          <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight mb-10">
+            What every partnership must hold to
+          </h2>
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8">
+            {PARTNERSHIP_PRINCIPLES.map((principle) => (
+              <li key={principle.title} className="pt-5 border-t border-[var(--border-strong)]">
+                <h3 className="text-[17px] font-semibold text-[var(--text-primary)] tracking-tight mb-2">{principle.title}</h3>
+                <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">{principle.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {/* 5-Step Transparent Collaboration Pipeline from braxvio.com */}
-        <div className="p-8 sm:p-12 rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-xs mb-20">
+        <section className="mb-14 md:mb-28">
           <div className="max-w-2xl mb-10">
-            <span className="text-xs font-mono uppercase tracking-wider text-[var(--accent-technical)] block mb-2">
-              Transparent Convergence Pipeline
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+            <h2 className="text-[30px] sm:text-[36px] font-bold text-[var(--text-primary)] tracking-tight mb-3">
               How Partnerships Begin
             </h2>
-            <p className="text-sm text-[var(--text-secondary)]">
+            <p className="text-[17px] text-[var(--text-secondary)]">
               Every initiative is evaluated on strategic synergy, technical rigor, and shared long-term societal value.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
-              <div>
-                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 01</span>
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Submit</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Tell us about your organization and the collaborative initiative you envision.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
-              <div>
-                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 02</span>
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Review</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Leadership assesses operational alignment and technical feasibility.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
-              <div>
-                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 03</span>
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Discuss</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Introductory dialogue to align on mutual capabilities and key milestones.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
-              <div>
-                <span className="font-mono text-xs font-semibold text-[var(--accent-technical)] block mb-2">STEP 04</span>
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Evaluate</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Both parties explore technical architecture, scope, and governance.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] flex flex-col justify-between">
-              <div>
-                <span className="font-mono text-xs font-semibold text-emerald-500 block mb-2">STEP 05</span>
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">Build</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Sprint planning, API integration, and joint operational deployment.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Steps connect on one line on desktop, stack with a rail on mobile */}
+          <ol className="grid grid-cols-1 sm:grid-cols-5 gap-8 sm:gap-6">
+            {PARTNERSHIP_STEPS.map((step, idx) => (
+              <li key={step.title} className="relative flex sm:flex-col gap-4 sm:gap-0">
+                {/* Connector to the next step's marker (down on mobile, across from sm) */}
+                {idx < PARTNERSHIP_STEPS.length - 1 && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-[15px] top-8 -bottom-8 w-px sm:left-8 sm:-right-6 sm:top-[15px] sm:bottom-auto sm:w-auto sm:h-px bg-[var(--border-strong)]"
+                  />
+                )}
+                <span className="relative z-10 grid place-items-center size-8 rounded-full border border-[var(--border-strong)] bg-[var(--bg-primary)] text-[13px] font-semibold text-[var(--text-primary)] tabular-nums shrink-0 sm:mb-5">
+                  {idx + 1}
+                </span>
+                <div>
+                  <h3 className="text-[17px] font-semibold text-[var(--text-primary)] mb-1.5">{step.title}</h3>
+                  <p className="text-[14.5px] text-[var(--text-secondary)] leading-relaxed">{step.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         {/* Call to Action Card */}
-        <div className="p-10 sm:p-14 rounded-3xl border border-[var(--border-strong)] bg-gradient-to-b from-[var(--surface-elevated)] to-[var(--bg-secondary)]/40 text-center">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
+        <section className="px-6 py-12 sm:p-14 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-center">
+          <h2 className="text-[28px] sm:text-[40px] font-bold text-[var(--text-primary)] tracking-tight leading-tight mb-4">
             Initiate a Partnership Dialogue
           </h2>
-          <p className="text-base text-[var(--text-secondary)] max-w-xl mx-auto mb-8 font-normal">
+          <p className="text-[16px] sm:text-[17px] text-[var(--text-secondary)] leading-relaxed max-w-xl mx-auto mb-8">
             Whether exploring enterprise pilot deployment, university integration with Kampus, dispensary onboarding with Pharmora, or discussing investment interest.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/contact?type=Strategic+Partnerships"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all shadow-md"
-            >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link href="/contact?type=Strategic+Partnerships" className="btn btn-primary w-full sm:w-auto px-7">
               Start Strategic Conversation
               <ArrowRight className="w-4 h-4" />
             </Link>
@@ -343,12 +279,13 @@ export default function PartnershipsPage() {
               href="https://wa.me/qr/V2VVDKVB7J7WL1"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-emerald-700 dark:text-emerald-300 bg-[#ECFDF5] dark:bg-[#064E3B] hover:bg-[#D1FAE5] dark:hover:bg-[#065F46] border border-emerald-200 dark:border-emerald-700 active:scale-[0.98] transition-all"
+              className="btn btn-secondary w-full sm:w-auto px-7"
             >
+              <MessageCircle className="w-4 h-4" />
               Chat on WhatsApp
             </a>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

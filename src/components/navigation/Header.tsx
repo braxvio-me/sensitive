@@ -4,10 +4,11 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Search } from "lucide-react";
+import { Menu, X, ArrowRight, Search } from "lucide-react";
 import { BraxvioLogo } from "@/components/ui/BraxvioLogo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useCommandPalette } from "@/components/navigation/GlobalCommandPalette";
+import { ShortcutKey } from "@/components/ui/ShortcutKey";
 
 const NAV_ITEMS = [
   { label: "Ventures", href: "/ventures" },
@@ -81,8 +82,8 @@ export function Header() {
           mobileMenuOpen
             ? "bg-[var(--bg-primary)] border-b border-[var(--border-subtle)]"
             : scrolled
-            ? "bg-[var(--bg-primary)]/90 backdrop-blur-md border-b border-[var(--border-subtle)] shadow-xs"
-            : "bg-[var(--bg-primary)]"
+            ? "bg-[var(--bg-primary)]/90 backdrop-blur-md border-b border-[var(--border-subtle)]"
+            : "bg-[var(--bg-primary)] border-b border-transparent"
         }`}
       >
         <div className="content-container">
@@ -95,7 +96,7 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav
               aria-label="Primary Navigation"
-              className="hidden lg:flex items-center gap-1 xl:gap-1.5 min-w-0"
+              className="hidden lg:flex items-center gap-0.5 xl:gap-1 min-w-0"
             >
               {NAV_ITEMS.map((item) => {
                 const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -103,10 +104,11 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`text-[14px] xl:text-[15.5px] font-medium whitespace-nowrap rounded-full px-3 py-1.5 xl:px-4 xl:py-2 transition-all duration-200 ${
+                    aria-current={isActive ? "page" : undefined}
+                    className={`text-[14.5px] xl:text-[15px] font-medium whitespace-nowrap rounded-full px-3 py-2 xl:px-3.5 transition-colors duration-150 ${
                       isActive
-                        ? "text-[var(--text-primary)] font-semibold bg-[var(--surface-elevated)] border border-[var(--border-strong)] shadow-sm"
-                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] border border-transparent"
+                        ? "text-[var(--text-primary)] bg-[var(--bg-secondary)]"
+                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]"
                     }`}
                   >
                     {item.label}
@@ -120,35 +122,30 @@ export function Header() {
               <button
                 type="button"
                 onClick={openCommandPalette}
-                aria-label="Open Command Palette (⌘K)"
-                className="inline-flex items-center gap-1.5 xl:gap-2 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--surface-elevated)] hover:bg-[var(--bg-secondary)] border border-[var(--border-subtle)] shadow-2xs transition-colors shrink-0 cursor-pointer"
+                aria-label="Search the site"
+                className="inline-flex items-center gap-2 h-9 pl-3 pr-1.5 rounded-full text-[13.5px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--surface-elevated)] hover:bg-[var(--bg-secondary)] border border-[var(--border-subtle)] transition-colors shrink-0 cursor-pointer"
               >
-                <Search className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
-                <span className="text-[12px] hidden xl:inline">Search</span>
-                <kbd className="text-[10px] bg-[var(--bg-secondary)] border border-[var(--border-subtle)] px-1.5 py-0.5 rounded font-mono text-[var(--text-tertiary)]">
-                  ⌘K
-                </kbd>
+                <Search className="w-4 h-4 text-[var(--text-tertiary)]" />
+                <span className="hidden xl:inline pr-1">Search</span>
+                <ShortcutKey />
               </button>
 
               <ThemeToggle />
 
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center px-4 py-2 xl:px-5 xl:py-2.5 rounded-full text-[13px] xl:text-[14px] font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all shadow-xs shrink-0 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-cobalt)]"
-              >
+              <Link href="/contact" className="btn btn-primary btn-sm px-4 xl:px-5 shrink-0">
                 Start a Conversation
               </Link>
             </div>
 
             {/* Mobile Right Controls */}
-            <div className="flex lg:hidden items-center gap-1.5 shrink-0">
+            <div className="flex lg:hidden items-center gap-1 shrink-0">
               <button
                 type="button"
                 onClick={openCommandPalette}
-                aria-label="Search"
-                className="p-1.5 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] border border-[var(--border-subtle)] transition-colors cursor-pointer"
+                aria-label="Search the site"
+                className="grid place-items-center size-11 rounded-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
               >
-                <Search className="w-4 h-4 text-[var(--text-secondary)]" />
+                <Search className="w-[18px] h-[18px]" />
               </button>
               <ThemeToggle />
               <button
@@ -156,7 +153,7 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-expanded={mobileMenuOpen}
                 aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                className="p-1.5 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] border border-[var(--border-subtle)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-cobalt)] cursor-pointer"
+                className="grid place-items-center size-11 rounded-full text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -173,11 +170,11 @@ export function Header() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
-            className="fixed inset-x-0 top-20 bottom-0 z-50 bg-[var(--bg-primary)] border-t border-[var(--border-subtle)] px-6 py-8 flex flex-col justify-between overflow-y-auto overscroll-contain lg:hidden animate-in fade-in-50 duration-200"
+            className="fixed inset-x-0 top-20 bottom-0 z-50 bg-[var(--bg-primary)] border-t border-[var(--border-subtle)] px-6 py-8 flex flex-col justify-between overflow-y-auto overscroll-contain lg:hidden"
             style={{ height: "calc(100dvh - 5rem)" }}
           >
             <div className="w-full max-w-md mx-auto flex flex-col justify-between flex-1">
-              <nav className="flex flex-col gap-4">
+              <nav aria-label="Mobile Navigation" className="flex flex-col">
                 {NAV_ITEMS.map((item) => {
                   const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
                   return (
@@ -185,29 +182,26 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`text-xl font-medium py-3 border-b border-[var(--border-subtle)] flex items-center justify-between transition-colors ${
+                      aria-current={isActive ? "page" : undefined}
+                      className={`text-[22px] font-semibold tracking-tight py-4 border-b border-[var(--border-subtle)] flex items-center justify-between transition-colors ${
                         isActive
-                          ? "text-[var(--accent-cobalt)] font-semibold"
-                          : "text-[var(--text-primary)] hover:text-[var(--accent-cobalt)]"
+                          ? "text-[var(--accent-text)]"
+                          : "text-[var(--text-primary)] hover:text-[var(--accent-text)]"
                       }`}
                     >
                       <span>{item.label}</span>
-                      <ArrowUpRight className="w-4 h-4 opacity-50" />
+                      <ArrowRight className="w-4 h-4 text-[var(--text-tertiary)]" />
                     </Link>
                   );
                 })}
               </nav>
 
               <div className="pt-6 border-t border-[var(--border-subtle)] flex flex-col gap-4">
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3.5 px-4 rounded-full text-center text-base font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 transition-all shadow-sm active:scale-[0.99]"
-                >
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="btn btn-primary w-full">
                   Start a Conversation
                 </Link>
-                <p className="text-xs text-center text-[var(--text-tertiary)] font-mono">
-                  Founded in Africa · Global Horizon
+                <p className="text-[13px] text-center text-[var(--text-tertiary)]">
+                  Accra, Ghana · Founded 2024
                 </p>
               </div>
             </div>

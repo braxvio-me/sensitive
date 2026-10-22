@@ -24,41 +24,39 @@ const TRUST_PILLARS = [
   },
 ];
 
+// Hairline column dividers: 2 columns from `sm`, 4 from `lg`
+const PILLAR_LAYOUT = [
+  "sm:pr-6 lg:pr-8",
+  "sm:pl-6 sm:border-l lg:px-8",
+  "sm:pr-6 lg:px-8 lg:border-l",
+  "sm:pl-6 sm:border-l lg:pl-8 lg:pr-0",
+];
+
 export function TrustArchitectureGrid() {
   return (
-    <section className="py-20 bg-[var(--bg-primary)]">
+    <section className="py-16 md:py-28 bg-[var(--bg-primary)]">
       <div className="content-container">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <h2 className="text-[30px] sm:text-[40px] font-bold text-[var(--text-primary)] tracking-tight leading-tight mb-4">
             Built for longevity. Engineered for trust.
           </h2>
-          <p className="text-[16px] text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-[16px] sm:text-[17px] text-[var(--text-secondary)] leading-relaxed">
             Enterprise partners and institutional stakeholders rely on Braxvio ventures for mission-critical infrastructure across developing markets.
           </p>
         </div>
 
-        {/* 4-Column Grid matching reference ui/desktop-full (1).png */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 pt-10 border-t border-[var(--border-subtle)]">
           {TRUST_PILLARS.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
-              <div
-                key={idx}
-                className="flex flex-col gap-3 p-5 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)]/60 hover:bg-[var(--surface-elevated)] transition-colors"
-              >
-                <div className="text-[var(--accent-cobalt)] mb-1">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-[var(--text-primary)] tracking-tight">
-                  {pillar.title}
-                </h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  {pillar.description}
-                </p>
-              </div>
+              <li key={pillar.title} className={PILLAR_LAYOUT[idx]}>
+                <Icon className="w-5 h-5 text-[var(--accent-text)] mb-4" strokeWidth={1.75} />
+                <h3 className="text-[17px] font-semibold text-[var(--text-primary)] tracking-tight mb-2">{pillar.title}</h3>
+                <p className="text-[14.5px] text-[var(--text-secondary)] leading-relaxed">{pillar.description}</p>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

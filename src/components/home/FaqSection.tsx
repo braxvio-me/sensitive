@@ -43,39 +43,51 @@ export function FaqSection() {
   };
 
   return (
-    <section className="py-24 bg-[var(--bg-primary)]">
+    <section className="py-16 md:py-28 bg-[var(--bg-primary)]">
       <div className="content-container max-w-3xl">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[var(--text-primary)] tracking-tight mb-14">
+        <h2 className="text-[30px] sm:text-[40px] font-bold text-center text-[var(--text-primary)] tracking-tight mb-12">
           Frequently Asked Questions
         </h2>
 
         {/* Clean Accordion List matching ui/faq-desktop.png */}
-        <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+        <div className="border-t border-[var(--border-subtle)]">
           {FAQS.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <div key={idx} className="py-5">
-                <button
-                  type="button"
-                  onClick={() => toggle(idx)}
-                  aria-expanded={isOpen}
-                  className="w-full flex items-center justify-between text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-cobalt)] rounded-lg p-1"
-                >
-                  <span className="text-[17px] sm:text-[18px] font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cobalt)] transition-colors pr-6">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-[var(--text-tertiary)] shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-[var(--accent-cobalt)]" : ""
-                    }`}
-                  />
-                </button>
+              <div key={faq.question} className="border-b border-[var(--border-subtle)]">
+                <h3>
+                  <button
+                    type="button"
+                    id={`faq-q-${idx}`}
+                    onClick={() => toggle(idx)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-a-${idx}`}
+                    className="w-full flex items-center justify-between gap-6 py-5 text-left group cursor-pointer"
+                  >
+                    <span className="text-[17px] sm:text-[18px] font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-[var(--text-tertiary)] shrink-0 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                </h3>
 
-                {isOpen && (
-                  <div className="pt-3 pb-2 text-[15px] text-[var(--text-secondary)] leading-relaxed animate-in fade-in duration-200">
-                    {faq.answer}
+                {/* Grid-row transition animates to the answer's natural height */}
+                <div
+                  id={`faq-a-${idx}`}
+                  role="region"
+                  aria-labelledby={`faq-q-${idx}`}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  }`}
+                >
+                  <div className="overflow-hidden" inert={!isOpen}>
+                    <p className="pb-6 pr-10 text-[15.5px] text-[var(--text-secondary)] leading-relaxed">{faq.answer}</p>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

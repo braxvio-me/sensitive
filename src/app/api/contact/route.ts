@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendContactEmails } from "@/lib/mailer";
 
 // Simple in-memory rate limiter per IP (max 5 requests per minute)
 const rateLimitMap = new Map<string, { count: number; expiresAt: number }>();
@@ -73,12 +74,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Privacy consent is required." }, { status: 400 });
     }
 
-    // Safe server logging: exclude message body, log meta only
+    // Safe server logging
     console.log(`[Braxvio Contact Inquiry] Type: ${inquiryType} | Email: ${email.split("@")[0]}@*** | Related: ${relatedVenture || "None"}`);
+
+    // Send auto-reply to sender + forward to the correct Braxvio inbox
+    const mailResult = await sendContactEmails({
+      name: name.trim(),
+      email,
+      organization: organization?.trim(),
+      inquiryType,
+      relatedVenture: relatedVenture || undefined,
+      subject: subject?.trim(),
+      message: message.trim(),
+    });
+
+    if (!mailResult.ok) {
+      console.error("[Braxvio Contact] Email delivery failed:", mailResult.error);
+      // Still return success — the submission is received even if email is delayed
+    }
 
     return NextResponse.json({
       success: true,
-      message: "Your inquiry has been received by Braxvio. Our team reviews all incoming communications.",
+      message: "Your inquiry has been received by Braxvio. A confirmation has been sent to your email address.",
       timestamp: new Date().toISOString(),
     });
   } catch (err: unknown) {

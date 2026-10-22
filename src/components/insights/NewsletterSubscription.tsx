@@ -1,56 +1,99 @@
 "use client";
 
 import React, { useState } from "react";
-import { BookOpen, Check } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 
 export function NewsletterSubscription() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubmitted(true);
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "We couldn't add you right now. Please try again.");
+      }
+      setStatus("success");
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "We couldn't add you right now. Please try again.");
+    }
   };
 
   return (
-    <div className="p-8 sm:p-12 rounded-3xl bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] max-w-3xl mx-auto text-center">
-      <BookOpen className="w-8 h-8 text-[var(--accent-cobalt)] mx-auto mb-4" />
-      <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
-        The Braxvio Quarterly
-      </h2>
-      <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl mx-auto">
-        A quiet briefing delivered once every three months covering African macro-technology trends, architectural breakthroughs, and portfolio milestones. Strictly zero marketing noise.
-      </p>
+    <section
+      aria-labelledby="quarterly-heading"
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center p-7 sm:p-12 rounded-2xl bg-[var(--bg-secondary)]"
+    >
+      <div className="lg:col-span-6">
+        <h2 id="quarterly-heading" className="text-[26px] sm:text-[32px] font-bold text-[var(--text-primary)] tracking-tight mb-3">
+          The Braxvio Quarterly
+        </h2>
+        <p className="text-[16px] text-[var(--text-secondary)] leading-relaxed max-w-xl">
+          A quiet briefing delivered once every three months covering African macro-technology trends, architectural breakthroughs, and portfolio milestones. Strictly zero marketing noise.
+        </p>
+      </div>
 
-      {submitted ? (
-        <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#ECFDF5] dark:bg-[#064E3B] border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 text-sm font-medium">
-          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-          <span>You have been added to the Braxvio Quarterly ledger.</span>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter executive email address..."
-            aria-label="Email address for Braxvio Quarterly"
-            className="w-full px-4 py-3 rounded-full text-sm bg-[var(--surface-elevated)] border border-[var(--border-strong)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-cobalt)]"
-          />
-          <button
-            type="submit"
-            className="w-full sm:w-auto px-6 py-3 rounded-full text-sm font-semibold text-white bg-[var(--accent-cobalt)] hover:bg-blue-600 active:scale-[0.98] transition-all shrink-0 cursor-pointer shadow-xs"
-          >
-            Subscribe
-          </button>
-        </form>
-      )}
-
-      <p className="text-[11px] font-mono text-[var(--text-tertiary)] mt-3">
-        Protected under Ghana DPA 2012 (Act 843) · Unsubscribe anytime with 1-click.
-      </p>
-    </div>
+      <div className="lg:col-span-6">
+        {status === "success" ? (
+          <div role="status" className="flex items-start gap-3 p-4 rounded-xl bg-[var(--surface-elevated)] border border-[var(--border-subtle)]">
+            <CheckCircle2 className="w-5 h-5 text-[var(--accent-text)] shrink-0 mt-0.5" strokeWidth={1.75} />
+            <div>
+              <p className="text-[15px] font-semibold text-[var(--text-primary)]">You&apos;re on the list.</p>
+              <p className="text-[14px] text-[var(--text-secondary)]">The next issue goes to {email}.</p>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="quarterly-email" className="field-label">
+              Email address
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                id="quarterly-email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                className="field bg-[var(--surface-elevated)]"
+              />
+              <button type="submit" disabled={status === "submitting"} className="btn btn-primary shrink-0">
+                {status === "submitting" ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Subscribing…
+                  </>
+                ) : (
+                  "Subscribe"
+                )}
+              </button>
+            </div>
+            {status === "error" && errorMessage && (
+              <div role="alert" className="form-error mt-3">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+            <p className="text-[13px] text-[var(--text-tertiary)] mt-3">
+              Protected under Ghana DPA 2012 (Act 843). Unsubscribe anytime with one click.
+            </p>
+          </form>
+        )}
+      </div>
+    </section>
   );
 }

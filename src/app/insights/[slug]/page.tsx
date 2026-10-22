@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, ArrowRight, BookOpen, ShieldCheck } from "lucide-react";
-import { INSIGHTS_ARTICLES, InsightArticle } from "@/content/insights";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { INSIGHTS_ARTICLES } from "@/content/insights";
+import { CopyButton } from "@/components/ui/CopyButton";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -38,11 +39,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function InsightDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+// The slug is URL data: reading it inside Suspense keeps navigation into the page instant
+export default function InsightDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  return (
+    <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
+      <InsightDetail params={params} />
+    </Suspense>
+  );
+}
+
+async function InsightDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = INSIGHTS_ARTICLES.find((a) => a.slug === slug);
 
@@ -55,52 +61,44 @@ export default async function InsightDetailPage({
   );
 
   return (
-    <article className="pt-12 pb-24">
+    <article className="pt-8 md:pt-14 pb-16 md:pb-24">
       <div className="content-container">
-        {/* Back Link */}
-        <div className="mb-10">
-          <Link
-            href="/insights"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>BACK TO INSIGHTS</span>
-          </Link>
-        </div>
+        <Link
+          href="/insights"
+          className="inline-flex items-center gap-2 text-[14px] font-medium text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors mb-10"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          All insights
+        </Link>
 
         {/* Article Header Container */}
-        <header className="max-w-3xl pb-12 mb-12 border-b border-[var(--border-subtle)]">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-mono mb-6 text-[var(--text-tertiary)]">
-            <span className="px-3 py-1 rounded-full bg-[var(--bg-secondary)] text-[var(--accent-cobalt)] font-semibold border border-[var(--border-subtle)]">
-              {article.category}
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" />
-              {article.readTime}
-            </span>
-            <span>•</span>
+        <header className="max-w-3xl pb-10 mb-12 border-b border-[var(--border-subtle)]">
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[14px] text-[var(--text-tertiary)] mb-6">
+            <span className="font-semibold text-[var(--text-primary)]">{article.category}</span>
+            <span aria-hidden="true">·</span>
+            <span>{article.readTime}</span>
+            <span aria-hidden="true">·</span>
             <span>{article.publishDate}</span>
-          </div>
+          </p>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.12] mb-6">
+          <h1 className="text-[36px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.035em] text-[var(--text-primary)] leading-[1.08] mb-6">
             {article.title}
           </h1>
 
-          <p className="text-lg sm:text-xl text-[var(--text-secondary)] leading-relaxed mb-8">
+          <p className="text-[18px] sm:text-[20px] text-[var(--text-secondary)] leading-relaxed mb-8">
             {article.subtitle}
           </p>
 
-          {/* Author Badge */}
-          <div className="flex items-center gap-4 pt-6 border-t border-[var(--border-subtle)]">
-            <div className="w-12 h-12 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-subtle)] flex items-center justify-center font-mono font-bold text-sm text-[var(--text-primary)]">
+          <div className="flex items-center gap-4">
+            <div
+              aria-hidden="true"
+              className="grid place-items-center size-11 rounded-full bg-[var(--accent-surface)] text-[14px] font-semibold text-[var(--accent-text)]"
+            >
               {article.author.avatarInitials}
             </div>
             <div>
-              <div className="text-sm font-bold text-[var(--text-primary)]">
-                {article.author.name}
-              </div>
-              <div className="text-xs text-[var(--text-secondary)]">
+              <div className="text-[15px] font-semibold text-[var(--text-primary)]">{article.author.name}</div>
+              <div className="text-[13.5px] text-[var(--text-tertiary)]">
                 {article.author.role} · {article.author.division}
               </div>
             </div>
@@ -108,11 +106,11 @@ export default async function InsightDetailPage({
         </header>
 
         {/* Article Body — Constrained strictly to 65–75ch for optimal reading typography */}
-        <main className="max-w-[70ch] space-y-10 text-[16px] sm:text-[17.5px] text-[var(--text-primary)] leading-[1.75] font-normal">
+        <div className="max-w-[68ch] space-y-10 text-[17px] sm:text-[18px] leading-[1.75]">
           {article.content.map((section, idx) => (
-            <div key={idx} className="space-y-6">
+            <section key={idx} className="space-y-6">
               {section.heading && (
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)] pt-4 pb-1">
+                <h2 className="text-[26px] sm:text-[30px] font-bold tracking-tight text-[var(--text-primary)] leading-tight pt-4">
                   {section.heading}
                 </h2>
               )}
@@ -124,58 +122,51 @@ export default async function InsightDetailPage({
               ))}
 
               {section.callout && (
-                <blockquote className="my-8 pl-6 border-l-3 border-[var(--accent-cobalt)] italic text-lg sm:text-xl text-[var(--text-primary)] font-serif bg-[var(--bg-secondary)]/30 py-4 pr-4 rounded-r-xl">
-                  &ldquo;{section.callout}&rdquo;
+                <blockquote className="my-10 py-6 border-y border-[var(--border-strong)] text-[21px] sm:text-[24px] font-semibold tracking-tight text-[var(--text-primary)] leading-snug">
+                  {section.callout}
                 </blockquote>
               )}
-            </div>
+            </section>
           ))}
-        </main>
+        </div>
 
-        {/* Article Footer & Sovereign Verification */}
-        <div className="max-w-3xl mt-16 pt-8 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-[var(--text-tertiary)]">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Braxvio Technical Review Ledger · Approved for Public Release</span>
-          </div>
-          <div>Accra, Ghana</div>
+        {/* Article Footer */}
+        <div className="max-w-[68ch] mt-16 pt-6 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-4">
+          <p className="text-[14px] text-[var(--text-tertiary)]">
+            Written by <span className="font-medium text-[var(--text-secondary)]">{article.author.name}</span> · Accra, Ghana
+          </p>
+          <CopyButton label="Copy link" copiedLabel="Link copied" />
         </div>
 
         {/* More Essays Navigation */}
         {relatedArticles.length > 0 && (
-          <div className="max-w-4xl mt-20 pt-16 border-t border-[var(--border-strong)]">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-sm font-mono uppercase tracking-widest text-[var(--text-tertiary)] font-semibold">
-                More Technical Dispatches
-              </h3>
-              <Link
-                href="/insights"
-                className="text-xs font-mono text-[var(--accent-cobalt)] hover:underline"
-              >
-                View All Insights →
+          <aside className="max-w-4xl mt-20 pt-12 border-t border-[var(--border-strong)]">
+            <div className="flex items-center justify-between gap-4 mb-8">
+              <h2 className="text-[24px] font-bold tracking-tight text-[var(--text-primary)]">More from Insights</h2>
+              <Link href="/insights" className="link-accent text-[14px]">
+                View all
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {relatedArticles.map((rel) => (
                 <Link
                   key={rel.slug}
                   href={`/insights/${rel.slug}`}
-                  className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] hover:border-[var(--accent-cobalt)] transition-all group"
+                  className="flex flex-col p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] hover:border-[var(--border-strong)] transition-colors group"
                 >
-                  <div className="text-[10px] font-mono uppercase text-[var(--accent-cobalt)] font-semibold mb-2">
-                    {rel.category} • {rel.readTime}
-                  </div>
-                  <h4 className="text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cobalt)] transition-colors mb-2">
-                    {rel.title}
-                  </h4>
-                  <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
-                    {rel.summary}
+                  <p className="text-[13px] text-[var(--text-tertiary)] mb-2">
+                    <span className="font-semibold text-[var(--text-primary)]">{rel.category}</span> · {rel.readTime}
                   </p>
+                  <h3 className="text-[19px] font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent-text)] transition-colors mb-2">
+                    {rel.title}
+                  </h3>
+                  <p className="text-[14.5px] text-[var(--text-secondary)] line-clamp-2 leading-relaxed">{rel.summary}</p>
                 </Link>
               ))}
             </div>
-          </div>
+          </aside>
         )}
       </div>
     </article>

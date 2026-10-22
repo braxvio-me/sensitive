@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useLayoutEffect, useState, useCallback } from "react";
 
 export type Theme = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
@@ -41,7 +41,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }, []);
 
-  useEffect(() => {
+  // Layout effect: re-applies the theme before paint (React clears <html> attributes on the dev remount)
+  useLayoutEffect(() => {
     setMounted(true);
     const saved = localStorage.getItem("braxvio-theme") as Theme | null;
     const initialTheme: Theme = saved === "light" || saved === "dark" || saved === "system" ? saved : "light";

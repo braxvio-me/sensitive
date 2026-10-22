@@ -58,7 +58,7 @@ export function BraxvioLogo({
 
       {!iconOnly && (
         <span
-          className={`${dimensions.title} font-bold tracking-[-0.03em] text-[var(--text-primary)] leading-none transition-colors group-hover:text-[var(--accent-primary)]`}
+          className={`${dimensions.title} font-bold tracking-[-0.03em] text-[var(--text-primary)] leading-none transition-colors group-hover:text-[var(--accent-text)]`}
         >
           Braxvio
         </span>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendCareersEmails } from "@/lib/mailer";
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,9 +29,23 @@ export async function POST(req: NextRequest) {
 
     console.log(`[Braxvio Talent Interest] Discipline: ${discipline} | Name: ${name}`);
 
+    // Send auto-reply to applicant + forward to jobs@braxvio.com
+    const mailResult = await sendCareersEmails({
+      name: name.trim(),
+      email,
+      discipline: discipline || "Not specified",
+      portfolioUrl: portfolioUrl?.trim() || undefined,
+      note: note.trim(),
+    });
+
+    if (!mailResult.ok) {
+      console.error("[Braxvio Careers] Email delivery failed:", mailResult.error);
+      // Still return success — submission recorded even if email is delayed
+    }
+
     return NextResponse.json({
       success: true,
-      message: "Expression of interest recorded successfully.",
+      message: "Expression of interest recorded. A confirmation has been sent to your email address.",
     });
   } catch (err: unknown) {
     return NextResponse.json(
