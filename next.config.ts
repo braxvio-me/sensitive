@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["172.20.10.*", "192.168.*.*", "10.*.*.*"],
   experimental: {
     agentFeedback: true,
+    // Hostinger builds from a fresh clone every deploy, so the Turbopack build
+    // cache is never reused — writing it only adds memory pressure and time.
+    turbopackFileSystemCacheForBuild: false,
   },
   cacheComponents: true,
   partialPrefetching: true,
