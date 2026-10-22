@@ -3,17 +3,40 @@ import nodemailer from "nodemailer";
 // ---------------------------------------------------------------------------
 // SMTP transport — configured entirely via environment variables
 // ---------------------------------------------------------------------------
+
+function validateSmtpConfig(): string | null {
+  const required: Record<string, string | undefined> = {
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS: process.env.SMTP_PASS,
+  };
+  for (const [key, val] of Object.entries(required)) {
+    if (!val || val.includes("YOUR_") || val.includes("your-smtp")) {
+      return `[Braxvio Mailer] Missing or placeholder value for ${key} in .env.local — emails will not send.`;
+    }
+  }
+  return null;
+}
+
 function createTransport() {
+  const warning = validateSmtpConfig();
+  if (warning) console.error(warning);
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST!,
+    host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT ?? 587),
     secure: process.env.SMTP_SECURE === "true", // true for 465, false for 587/25
     auth: {
-      user: process.env.SMTP_USER!,
-      pass: process.env.SMTP_PASS!,
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
+    // cPanel hosts sometimes need this to accept self-signed certs
+    tls: { rejectUnauthorized: false },
   });
 }
+
+// Friendly sender address
+const FROM_ADDRESS = process.env.SMTP_FROM ?? "Braxvio <no-reply@braxvio.com>";
 
 // ---------------------------------------------------------------------------
 // Routing: map inquiry types → the correct Braxvio inbox
@@ -211,7 +234,7 @@ export async function sendContactEmails(opts: {
     await Promise.all([
       // Auto-reply to sender
       transport.sendMail({
-        from: `"Braxvio" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: opts.email,
         subject: "We've received your inquiry — Braxvio",
         text: replyText,
@@ -219,7 +242,7 @@ export async function sendContactEmails(opts: {
       }),
       // Internal notification to the right inbox
       transport.sendMail({
-        from: `"Braxvio Forms" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: inbox,
         replyTo: opts.email,
         subject: `[${opts.inquiryType}] New inquiry from ${opts.name}`,
@@ -256,14 +279,14 @@ export async function sendCareersEmails(opts: {
 
     await Promise.all([
       transport.sendMail({
-        from: `"Braxvio" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: opts.email,
         subject: "Expression of interest received — Braxvio",
         text: replyText,
         html: replyHtml,
       }),
       transport.sendMail({
-        from: `"Braxvio Forms" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: "jobs@braxvio.com",
         replyTo: opts.email,
         subject: `[Talent] New expression of interest — ${opts.name} (${opts.discipline})`,
@@ -287,7 +310,7 @@ export async function sendNewsletterConfirmation(email: string): Promise<SendRes
 
     await Promise.all([
       transport.sendMail({
-        from: `"The Braxvio Quarterly" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: email,
         subject: "You're subscribed to The Braxvio Quarterly",
         text,
@@ -295,7 +318,7 @@ export async function sendNewsletterConfirmation(email: string): Promise<SendRes
       }),
       // Notify admin of new subscriber
       transport.sendMail({
-        from: `"Braxvio Forms" <${process.env.SMTP_FROM ?? "no-reply@braxvio.com"}>`,
+        from: FROM_ADDRESS,
         to: "admin@braxvio.com",
         subject: `[Newsletter] New subscriber: ${email}`,
         text: `New Braxvio Quarterly subscriber:\n\nEmail: ${email}\nTime: ${new Date().toISOString()}`,
