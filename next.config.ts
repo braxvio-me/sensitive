@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isHostinger = process.env.HOSTINGER_BUILD === "true";
+
 const nextConfig: NextConfig = {
   // Dev only: let phones and other devices on the local network load the dev
   // server's scripts. Without this, `next dev` blocks them and pages opened by
@@ -10,15 +12,22 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
-  reactCompiler: true,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
+  // reactCompiler adds significant memory overhead — disabled on constrained
+  // build environments (e.g. Hostinger). Enable locally as needed.
+  reactCompiler: !isHostinger,
+  // turbopack config is dev-only; production `next build` uses Webpack.
+  // Keeping this block causes Hostinger's build container to OOM-kill the
+  // process after ~15 minutes with no error message printed.
+  ...(!isHostinger && {
+    turbopack: {
+      rules: {
+        "*.css": {
+          loaders: ["@tailwindcss/turbopack"],
+          as: "*.css",
+        },
       },
     },
-  },
+  }),
 };
 
 export default nextConfig;
