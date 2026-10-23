@@ -110,7 +110,11 @@ export default function RootLayout({
         {/* Applies the saved theme before first paint so dark mode never flashes light */}
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
       </head>
-      <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
+      {/* Browser extensions (e.g. ColorZilla's cz-shortcut-listen) inject attributes on <body> before hydration */}
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]"
+      >
         <ThemeProvider>
           <CommandPaletteProvider>
             <Header />
